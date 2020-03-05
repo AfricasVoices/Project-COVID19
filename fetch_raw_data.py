@@ -150,9 +150,6 @@ def fetch_from_shaqadoon_csv(user, google_cloud_credentials_file_path, raw_data_
             )
         log.info("Converted the recovered messages to TracedData")
 
-        if blob_url in shaqadoon_csv_source.activation_flow_urls:
-            label_somalia_operator(user, traced_runs, phone_number_uuid_table)
-
         log.info(f"Exporting {len(traced_runs)} TracedData items to {traced_runs_output_path}...")
         IOUtils.ensure_dirs_exist_for_file(traced_runs_output_path)
         with open(traced_runs_output_path, "w") as f:
