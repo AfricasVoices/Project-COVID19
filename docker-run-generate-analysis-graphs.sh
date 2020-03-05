@@ -52,7 +52,6 @@ container="$(docker container create ${SYS_PTRACE_CAPABILITY} -w /app "$IMAGE_NA
 echo "Created container $container"
 container_short_id=${container:0:7}
 
-
 # Copy input data into the container
 echo "Copying $INPUT_PIPELINE_CONFIGURATION -> $container_short_id:/data/pipeline_configuration.json"
 docker cp "$INPUT_PIPELINE_CONFIGURATION" "$container:/data/pipeline_configuration.json"
