@@ -5,12 +5,12 @@
   "Codes": [
     {
       "CodeID": "code-E-720cdb66",
-      "DisplayText": "meta: escalate",
       "CodeType": "Meta",
+      "MetaCode": "escalate",
+      "DisplayText": "meta: ESCALATE",
       "NumericValue": -100070,
       "StringValue": "escalate",
       "VisibleInCoda": true,
-      "MetaCode": "escalate",
       "Shortcut": "e"
     },
     {
