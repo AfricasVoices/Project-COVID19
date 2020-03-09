@@ -3205,147 +3205,147 @@
     },
     {
       "CodeID": "code-NA-f93d3eb7",
-      "DisplayText": "NA (missing)",
       "CodeType": "Control",
+      "ControlCode": "NA",
+      "DisplayText": "NA (missing)",
       "NumericValue": -10,
       "StringValue": "NA",
-      "VisibleInCoda": false,
-      "ControlCode": "NA"
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-NS-2c11b7c9",
-      "DisplayText": "NS (skip)",
       "CodeType": "Control",
+      "ControlCode": "NS",
+      "DisplayText": "NS (skip)",
       "NumericValue": -20,
       "StringValue": "NS",
-      "VisibleInCoda": false,
-      "ControlCode": "NS"
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-NC-42f1d983",
-      "DisplayText": "NC (not coded)",
       "CodeType": "Control",
+      "ControlCode": "NC",
+      "DisplayText": "NC (not coded)",
       "NumericValue": -30,
       "StringValue": "NC",
-      "VisibleInCoda": true,
-      "ControlCode": "NC"
+      "VisibleInCoda": true
     },
     {
       "CodeID": "code-NR-5e3eee23",
-      "DisplayText": "NR (not reviewed)",
       "CodeType": "Control",
+      "ControlCode": "NR",
+      "DisplayText": "NR (not reviewed)",
       "NumericValue": -40,
       "StringValue": "NR",
-      "VisibleInCoda": false,
-      "ControlCode": "NR"
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-NIC-99631cb8",
-      "DisplayText": "NIC (not internally consistent)",
       "CodeType": "Control",
+      "ControlCode": "NIC",
+      "DisplayText": "NIC (not internally consistent)",
       "NumericValue": -50,
       "StringValue": "NIC",
-      "VisibleInCoda": false,
-      "ControlCode": "NIC"
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-STOP-08b832a8",
-      "DisplayText": "STOP",
       "CodeType": "Control",
+      "ControlCode": "STOP",
+      "DisplayText": "STOP",
       "NumericValue": -90,
       "StringValue": "STOP",
-      "VisibleInCoda": true,
-      "ControlCode": "STOP"
+      "VisibleInCoda": true
     },
     {
       "CodeID": "code-WS-adb25603b7af",
-      "DisplayText": "WS (wrong scheme)",
       "CodeType": "Control",
+      "ControlCode": "WS",
+      "DisplayText": "WS (wrong scheme)",
       "NumericValue": -100,
       "StringValue": "WS",
-      "VisibleInCoda": true,
-      "ControlCode": "WS"
+      "VisibleInCoda": true
     },
     {
       "CodeID": "code-CE-016c1e22",
-      "DisplayText": "CE (coding error)",
       "CodeType": "Control",
+      "ControlCode": "CE",
+      "DisplayText": "CE (coding error)",
       "NumericValue": -110,
       "StringValue": "CE",
-      "VisibleInCoda": false,
-      "ControlCode": "CE"
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-PB-a434a800",
-      "DisplayText": "meta: push back",
       "CodeType": "Meta",
+      "MetaCode": "push_back",
+      "DisplayText": "meta: push back",
       "NumericValue": -100000,
       "StringValue": "push_back",
-      "VisibleInCoda": true,
-      "MetaCode": "push_back"
+      "VisibleInCoda": true
     },
     {
       "CodeID": "code-SQ-5e8f0122",
-      "DisplayText": "meta: showtime question",
       "CodeType": "Meta",
+      "MetaCode": "showtime_question",
+      "DisplayText": "meta: showtime question",
       "NumericValue": -100030,
       "StringValue": "showtime_question",
-      "VisibleInCoda": true,
-      "MetaCode": "showtime_question"
+      "VisibleInCoda": true
     },
     {
       "CodeID": "code-Q-a5d3700d",
-      "DisplayText": "meta: question",
       "CodeType": "Meta",
+      "MetaCode": "question",
+      "DisplayText": "meta: question",
       "NumericValue": -100010,
       "StringValue": "question",
-      "VisibleInCoda": true,
-      "MetaCode": "question"
+      "VisibleInCoda": true
     },
     {
       "CodeID": "code-G-97cb3199",
-      "DisplayText": "meta: greeting",
       "CodeType": "Meta",
+      "MetaCode": "greeting",
+      "DisplayText": "meta: greeting",
       "NumericValue": -100020,
       "StringValue": "greeting",
-      "VisibleInCoda": true,
-      "MetaCode": "greeting"
+      "VisibleInCoda": true
     },
     {
       "CodeID": "code-OI-c5f1d054",
-      "DisplayText": "meta: opt-in",
       "CodeType": "Meta",
+      "MetaCode": "opt-in",
+      "DisplayText": "meta: opt-in",
       "NumericValue": -100040,
       "StringValue": "opt_in",
-      "VisibleInCoda": true,
-      "MetaCode": "opt-in"
+      "VisibleInCoda": true
     },
     {
       "CodeID": "code-SC-a3a065bc",
-      "DisplayText": "meta: similar content",
       "CodeType": "Meta",
+      "MetaCode": "similar_content",
+      "DisplayText": "meta: similar content",
       "NumericValue": -100050,
       "StringValue": "similar_content",
-      "VisibleInCoda": true,
-      "MetaCode": "similar_content"
+      "VisibleInCoda": true
     },
     {
       "CodeID": "code-PI-83b90d32",
-      "DisplayText": "meta: participation incentive",
       "CodeType": "Meta",
+      "MetaCode": "participation_incentive",
+      "DisplayText": "meta: participation incentive",
       "NumericValue": -100060,
       "StringValue": "participation_incentive",
-      "VisibleInCoda": true,
-      "MetaCode": "participation_incentive"
+      "VisibleInCoda": true
     },
     {
       "CodeID": "code-EC-3a704f5b",
-      "DisplayText": "meta: exclusion complaint",
       "CodeType": "Meta",
+      "MetaCode": "exclusion_complaint",
+      "DisplayText": "meta: exclusion complaint",
       "NumericValue": -100070,
       "StringValue": "exclusion_complaint",
-      "VisibleInCoda": true,
-      "MetaCode": "exclusion_complaint"
+      "VisibleInCoda": true
     }
   ]
 }
