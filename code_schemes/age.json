@@ -4,6 +4,16 @@
   "Version": "0.0.0.5",
   "Codes": [
     {
+      "CodeID": "code-E-720cdb66",
+      "CodeType": "Meta",
+      "MetaCode": "escalate",
+      "DisplayText": "meta: escalate",
+      "NumericValue": -100070,
+      "StringValue": "escalate",
+      "VisibleInCoda": true,
+      "Shortcut": "e"
+    },
+    {
       "CodeID": "code-a3305435",
       "CodeType": "Normal",
       "DisplayText": "10",
