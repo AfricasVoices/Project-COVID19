@@ -28,6 +28,7 @@ class CodingPlan(object):
         self.code_imputation_function = code_imputation_function
         self.ws_code = ws_code
         self.raw_field_fold_strategy = raw_field_fold_strategy
+        self.dataset_name = raw_field
 
         if id_field is None:
             id_field = "{}_id".format(self.raw_field)
