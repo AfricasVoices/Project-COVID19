@@ -15,7 +15,7 @@ from rapid_pro_tools.rapid_pro_client import RapidProClient
 from storage.google_cloud import google_cloud_utils
 from temba_client.v2 import Contact, Run
 
-from src.lib import PipelineConfiguration, CodeSchemes
+from src.lib import PipelineConfiguration
 from src.lib.pipeline_configuration import RapidProSource, GCloudBucketSource, RecoveryCSVSource
 
 log = Logger(__name__)
