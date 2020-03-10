@@ -35,7 +35,7 @@
     {"RapidProKey": "Gender (Text) - covid19_s01_demog", "PipelineKey": "gender_raw"},
     {"RapidProKey": "Gender (Time) - covid19_s01_demog", "PipelineKey": "gender_time"},
     {"RapidProKey": "Age (Text) - covid19_s01_demog", "PipelineKey": "age_raw"},
-    {"RapidProKey": "Age (Time) - covid19_s01_demog", "PipelineKey": "age_time"},
+    {"RapidProKey": "Age (Time) - covid19_s01_demog", "PipelineKey": "age_time"}
   ],
   "ProjectStartDate": "2000-01-01T00:00:00+03:00",
   "ProjectEndDate": "2100-01-01T00:00:00+03:00",
