@@ -20,7 +20,8 @@
       "DisplayText": "meta: question",
       "NumericValue": -100010,
       "StringValue": "question",
-      "VisibleInCoda": true
+      "VisibleInCoda": true,
+      "Shortcut": "q"
     },
     {
       "CodeID": "code-a3233242",
@@ -28,7 +29,8 @@
       "DisplayText": "knowledge",
       "NumericValue": 1,
       "StringValue": "knowledge",
-      "VisibleInCoda": true
+      "VisibleInCoda": true,
+      "Shortcut": "k"
     },
     {
       "CodeID": "code-0d56a58a",
@@ -36,7 +38,8 @@
       "DisplayText": "attitude",
       "NumericValue": 2,
       "StringValue": "attitude",
-      "VisibleInCoda": true
+      "VisibleInCoda": true,
+      "Shortcut": "a"
     },
     {
       "CodeID": "code-8c2a5758",
@@ -44,7 +47,8 @@
       "DisplayText": "behaviour",
       "NumericValue": 3,
       "StringValue": "behaviour",
-      "VisibleInCoda": true
+      "VisibleInCoda": true,
+      "Shortcut": "b"
     },
     {
       "CodeID": "code-NA-f93d3eb7",
