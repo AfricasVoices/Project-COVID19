@@ -22,7 +22,30 @@
       "StringValue": "question",
       "VisibleInCoda": true
     },
-
+    {
+      "CodeID": "code-a3233242",
+      "CodeType": "Normal",
+      "DisplayText": "knowledge",
+      "NumericValue": 1,
+      "StringValue": "knowledge",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-0d56a58a",
+      "CodeType": "Normal",
+      "DisplayText": "attitude",
+      "NumericValue": 2,
+      "StringValue": "attitude",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-8c2a5758",
+      "CodeType": "Normal",
+      "DisplayText": "behaviour",
+      "NumericValue": 3,
+      "StringValue": "behaviour",
+      "VisibleInCoda": true
+    },
     {
       "CodeID": "code-NA-f93d3eb7",
       "CodeType": "Control",
