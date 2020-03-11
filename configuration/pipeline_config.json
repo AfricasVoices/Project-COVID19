@@ -10,8 +10,7 @@
         "covid19_s01e01_activation"
       ],
       "SurveyFlowNames": [
-        "covid19_s01_demog",
-        "covid19_s01e01_follow_up"
+        "covid19_s01_demog"
       ],
       "TestContactUUIDs": [
         "59fff919-ffe6-4baa-a674-c1a11b956445",
