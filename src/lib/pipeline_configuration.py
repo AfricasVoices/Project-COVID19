@@ -61,7 +61,11 @@ class PipelineConfiguration(object):
 
         PipelineConfiguration.RQA_CODING_PLANS = coding_plans.get_rqa_coding_plans(self.pipeline_name)
         PipelineConfiguration.SURVEY_CODING_PLANS = coding_plans.get_survey_coding_plans(self.pipeline_name)
-        PipelineConfiguration.DEMOG_CODING_PLANS = coding_plans.get_survey_coding_plans(self.pipeline_name)[0:2]
+
+        # TODO: This is a temporary COVID19-specific hack to extract demographics out of the surveys, so that the
+        #       automated analysis can analyse demographics only. Not fixing this properly here for now, because we may
+        #       instead decide to analysis all of the survey questions in the same way as we do the demographics.
+        PipelineConfiguration.DEMOG_CODING_PLANS = coding_plans.get_survey_coding_plans(self.pipeline_name)[0:3]
         PipelineConfiguration.WS_CORRECT_DATASET_SCHEME = coding_plans.get_ws_correct_dataset_scheme(self.pipeline_name)
 
         self.validate()
