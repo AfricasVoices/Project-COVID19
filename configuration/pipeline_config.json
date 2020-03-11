@@ -41,7 +41,7 @@
   "ProjectEndDate": "2100-01-01T00:00:00+03:00",
   "FilterTestMessages": false,
   "MoveWSMessages": false,
-  "_DriveUpload": {
+  "DriveUpload": {
     "DriveCredentialsFileURL": "gs://avf-credentials/pipeline-runner-service-acct-avf-data-core-64cc71459fe7.json",
     "ProductionUploadPath": "covid19_analysis_outputs/covid19_production.csv",
     "MessagesUploadPath": "covid19_analysis_outputs/covid19_messages.csv",
