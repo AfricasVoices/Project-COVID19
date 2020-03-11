@@ -24,6 +24,16 @@
       "Shortcut": "q"
     },
     {
+      "CodeID": "code-S-461bfcdf",
+      "CodeType": "Meta",
+      "MetaCode": "answer",
+      "DisplayText": "meta: answer",
+      "NumericValue": -100090,
+      "StringValue": "answer",
+      "VisibleInCoda": true,
+      "Shortcut": "a"
+    },
+    {
       "CodeID": "code-a3233242",
       "CodeType": "Normal",
       "DisplayText": "knowledge",
