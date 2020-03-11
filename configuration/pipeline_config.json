@@ -1,0 +1,53 @@
+{
+  "PipelineName": "COVID19",
+  "RawDataSources": [
+    {
+      "SourceType": "RapidPro",
+      "Domain": "textit.in",
+      "TokenFileURL": "gs://avf-credentials/covid19-text-it-token.txt",
+      "ContactsFileName": "covid19_contacts",
+      "ActivationFlowNames": [
+        "covid19_s01e01_activation"
+      ],
+      "SurveyFlowNames": [
+        "covid19_s01_demog",
+        "covid19_s01e01_follow_up"
+      ],
+      "TestContactUUIDs": [
+        "59fff919-ffe6-4baa-a674-c1a11b956445",
+        "071a64f9-342e-4b92-9017-76efba2184da"
+      ]
+    }
+  ],
+  "PhoneNumberUuidTable": {
+    "FirebaseCredentialsFileURL": "gs://avf-credentials/avf-id-infrastructure-firebase-adminsdk-6xps8-b9173f2bfd.json",
+    "TableName": "COVID19_phone_number_avf_phone_id"
+  },
+  "RapidProKeyRemappings": [
+    {"RapidProKey": "avf_phone_id", "PipelineKey": "uid"},
+
+    {"RapidProKey": "Rqa_S01E01 (Text) - covid19_s01e01_activation", "PipelineKey": "rqa_s01e01_raw", "IsActivationMessage": true},
+    {"RapidProKey": "Rqa_S01E01 (Run ID) - covid19_s01e01_activation", "PipelineKey": "rqa_s01e01_run_id"},
+    {"RapidProKey": "Rqa_S01E01 (Time) - covid19_s01e01_activation", "PipelineKey": "sent_on"},
+
+    {"RapidProKey": "Constituency (Text) - covid19_s01_demog", "PipelineKey": "location_raw"},
+    {"RapidProKey": "Constituency (Time) - covid19_s01_demog", "PipelineKey": "location_time"},
+    {"RapidProKey": "Gender (Text) - covid19_s01_demog", "PipelineKey": "gender_raw"},
+    {"RapidProKey": "Gender (Time) - covid19_s01_demog", "PipelineKey": "gender_time"},
+    {"RapidProKey": "Age (Text) - covid19_s01_demog", "PipelineKey": "age_raw"},
+    {"RapidProKey": "Age (Time) - covid19_s01_demog", "PipelineKey": "age_time"}
+  ],
+  "ProjectStartDate": "2000-01-01T00:00:00+03:00",
+  "ProjectEndDate": "2100-01-01T00:00:00+03:00",
+  "FilterTestMessages": false,
+  "MoveWSMessages": false,
+  "_DriveUpload": {
+    "DriveCredentialsFileURL": "gs://avf-credentials/pipeline-runner-service-acct-avf-data-core-64cc71459fe7.json",
+    "ProductionUploadPath": "covid19_analysis_outputs/covid19_production.csv",
+    "MessagesUploadPath": "covid19_analysis_outputs/covid19_messages.csv",
+    "IndividualsUploadPath": "covid19_analysis_outputs/covid19_individuals.csv",
+    "AnalysisGraphsDir": "covid19_analysis_outputs/covid19_graphs"
+  },
+  "MemoryProfileUploadURLPrefix": "gs://avf-pipeline-logs-performance-nearline/2020/COVID19-test/memory-",
+  "DataArchiveUploadURLPrefix": "gs://pipeline-execution-backup-archive/2020/COVID19-test/data-"
+}
