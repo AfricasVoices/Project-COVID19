@@ -13,7 +13,43 @@
       "VisibleInCoda": true,
       "Shortcut": "e"
     },
-
+    {
+      "CodeID": "code-Q-a5d3700d",
+      "CodeType": "Meta",
+      "MetaCode": "question",
+      "DisplayText": "meta: question",
+      "NumericValue": -100010,
+      "StringValue": "question",
+      "VisibleInCoda": true,
+      "Shortcut": "q"
+    },
+    {
+      "CodeID": "code-a3233242",
+      "CodeType": "Normal",
+      "DisplayText": "knowledge",
+      "NumericValue": 1,
+      "StringValue": "knowledge",
+      "VisibleInCoda": true,
+      "Shortcut": "k"
+    },
+    {
+      "CodeID": "code-0d56a58a",
+      "CodeType": "Normal",
+      "DisplayText": "attitude",
+      "NumericValue": 2,
+      "StringValue": "attitude",
+      "VisibleInCoda": true,
+      "Shortcut": "a"
+    },
+    {
+      "CodeID": "code-8c2a5758",
+      "CodeType": "Normal",
+      "DisplayText": "behaviour",
+      "NumericValue": 3,
+      "StringValue": "behaviour",
+      "VisibleInCoda": true,
+      "Shortcut": "b"
+    },
     {
       "CodeID": "code-NA-f93d3eb7",
       "CodeType": "Control",
@@ -102,15 +138,6 @@
       "DisplayText": "meta: showtime question",
       "NumericValue": -100030,
       "StringValue": "showtime_question",
-      "VisibleInCoda": true
-    },
-    {
-      "CodeID": "code-Q-a5d3700d",
-      "CodeType": "Meta",
-      "MetaCode": "question",
-      "DisplayText": "meta: question",
-      "NumericValue": -100010,
-      "StringValue": "question",
       "VisibleInCoda": true
     },
     {
