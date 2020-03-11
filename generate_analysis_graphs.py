@@ -312,6 +312,11 @@ if __name__ == "__main__":
 
     log.info("Graphing the demographic distributions...")
     for demographic, counts in demographic_distributions.items():
+        if len(counts) > 200:
+            log.warning(f"Skipping graphing the distribution of codes for {demographic}, but is contains too many "
+                        f"columns to graph (has {len(counts)} columns; limit is 200).")
+            continue
+
         log.info(f"Graphing the distribution of codes for {demographic}...")
         altair.Chart(
             altair.Data(values=[{"code_string_value": code_string_value, "number_of_individuals": number_of_individuals}
