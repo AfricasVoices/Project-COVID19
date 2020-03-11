@@ -24,6 +24,16 @@
       "Shortcut": "q"
     },
     {
+      "CodeID": "code-S-461bfcdf",
+      "CodeType": "Meta",
+      "MetaCode": "answer",
+      "DisplayText": "meta: answer",
+      "NumericValue": -100090,
+      "StringValue": "answer",
+      "VisibleInCoda": true,
+      "Shortcut": "a"
+    },
+    {
       "CodeID": "code-a3233242",
       "CodeType": "Normal",
       "DisplayText": "knowledge",
@@ -39,7 +49,7 @@
       "NumericValue": 2,
       "StringValue": "attitude",
       "VisibleInCoda": true,
-      "Shortcut": "a"
+      "Shortcut": "m"
     },
     {
       "CodeID": "code-8c2a5758",
@@ -48,7 +58,7 @@
       "NumericValue": 3,
       "StringValue": "behaviour",
       "VisibleInCoda": true,
-      "Shortcut": "b"
+      "Shortcut": "o"
     },
     {
       "CodeID": "code-NA-f93d3eb7",
