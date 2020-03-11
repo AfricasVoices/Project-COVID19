@@ -46,7 +46,7 @@
     "ProductionUploadPath": "covid19_analysis_outputs/covid19_production.csv",
     "MessagesUploadPath": "covid19_analysis_outputs/covid19_messages.csv",
     "IndividualsUploadPath": "covid19_analysis_outputs/covid19_individuals.csv",
-    "AnalysisGraphsDir": "covid19_analysis_outputs/covid19_graphs"
+    "AnalysisGraphsDir": "covid19_analysis_outputs/covid19_automated_analysis"
   },
   "MemoryProfileUploadURLPrefix": "gs://avf-pipeline-logs-performance-nearline/2020/COVID19-test/memory-",
   "DataArchiveUploadURLPrefix": "gs://pipeline-execution-backup-archive/2020/COVID19-test/data-"
