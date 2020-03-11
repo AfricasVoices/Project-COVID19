@@ -10,12 +10,12 @@
         "covid19_s01e01_activation"
       ],
       "SurveyFlowNames": [
-        "covid19_s01_demog",
-        "covid19_s01e01_follow_up"
+        "covid19_s01_demog"
       ],
       "TestContactUUIDs": [
         "59fff919-ffe6-4baa-a674-c1a11b956445",
-        "071a64f9-342e-4b92-9017-76efba2184da"
+        "071a64f9-342e-4b92-9017-76efba2184da",
+        "9869195a-93ef-43dc-be61-401528de145f"
       ]
     }
   ],
@@ -41,7 +41,7 @@
   "ProjectEndDate": "2100-01-01T00:00:00+03:00",
   "FilterTestMessages": false,
   "MoveWSMessages": false,
-  "_DriveUpload": {
+  "DriveUpload": {
     "DriveCredentialsFileURL": "gs://avf-credentials/pipeline-runner-service-acct-avf-data-core-64cc71459fe7.json",
     "ProductionUploadPath": "covid19_analysis_outputs/covid19_production.csv",
     "MessagesUploadPath": "covid19_analysis_outputs/covid19_messages.csv",
