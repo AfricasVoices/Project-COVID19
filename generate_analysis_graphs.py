@@ -290,6 +290,7 @@ if __name__ == "__main__":
                 last_row_episode = episode
                 
     # Export a random sample of 100 messages for each normal code
+    log.info("Exporting samples of up to 100 messages for each normal code...")
     samples = []  # of dict
     for plan in PipelineConfiguration.RQA_CODING_PLANS:
         for cc in plan.coding_configurations:
@@ -298,6 +299,9 @@ if __name__ == "__main__":
                 code_to_messages[code.string_value] = []
                 
             for msg in messages:
+                if msg[CONSENT_WITHDRAWN_KEY] == Codes.TRUE:
+                    continue
+
                 for label in msg[cc.coded_field]:
                     code = cc.code_scheme.get_code_with_code_id(label["CodeID"])
                     code_to_messages[code.string_value].append(msg[plan.raw_field])
