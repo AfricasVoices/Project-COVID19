@@ -298,6 +298,9 @@ if __name__ == "__main__":
                 code_to_messages[code.string_value] = []
                 
             for msg in messages:
+                if msg[CONSENT_WITHDRAWN_KEY] == Codes.TRUE:
+                    continue
+
                 for label in msg[cc.coded_field]:
                     code = cc.code_scheme.get_code_with_code_id(label["CodeID"])
                     code_to_messages[code.string_value].append(msg[plan.raw_field])
