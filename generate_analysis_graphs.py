@@ -290,6 +290,7 @@ if __name__ == "__main__":
                 last_row_episode = episode
                 
     # Export a random sample of 100 messages for each normal code
+    log.info("Exporting samples of up to 100 messages for each normal code...")
     samples = []  # of dict
     for plan in PipelineConfiguration.RQA_CODING_PLANS:
         for cc in plan.coding_configurations:
