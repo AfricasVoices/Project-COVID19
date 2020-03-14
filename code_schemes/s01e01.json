@@ -175,7 +175,7 @@
       "DisplayText": "meta: similar content",
       "NumericValue": -100050,
       "StringValue": "similar_content",
-      "VisibleInCoda": true
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-PI-83b90d32",
@@ -184,7 +184,7 @@
       "DisplayText": "meta: participation incentive",
       "NumericValue": -100060,
       "StringValue": "participation_incentive",
-      "VisibleInCoda": true
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-EC-3a704f5b",
@@ -193,7 +193,7 @@
       "DisplayText": "meta: exclusion complaint",
       "NumericValue": -100070,
       "StringValue": "exclusion_complaint",
-      "VisibleInCoda": true
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-GR-e6de1b7e",
