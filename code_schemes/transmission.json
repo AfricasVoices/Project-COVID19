@@ -95,16 +95,6 @@
       "StringValue": "push_back",
       "VisibleInCoda": true
     },
-     {
-      "CodeID": "code-Q-a5d3700d",
-      "CodeType": "Meta",
-      "MetaCode": "question",
-      "DisplayText": "meta: question",
-      "NumericValue": -100010,
-      "StringValue": "question",
-      "VisibleInCoda": true,
-      "Shortcut": "q"
-    },
     {
       "CodeID": "code-SQ-5e8f0122",
       "CodeType": "Meta",
@@ -139,7 +129,7 @@
       "DisplayText": "meta: similar content",
       "NumericValue": -100050,
       "StringValue": "similar_content",
-      "VisibleInCoda": true
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-PI-83b90d32",
@@ -148,7 +138,7 @@
       "DisplayText": "meta: participation incentive",
       "NumericValue": -100060,
       "StringValue": "participation_incentive",
-      "VisibleInCoda": true
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-EC-3a704f5b",
@@ -157,6 +147,24 @@
       "DisplayText": "meta: exclusion complaint",
       "NumericValue": -100070,
       "StringValue": "exclusion_complaint",
+      "VisibleInCoda": false
+    },
+    {
+      "CodeID": "code-GR-e6de1b7e",
+      "CodeType": "Meta",
+      "MetaCode": "gratitude",
+      "DisplayText": "meta: gratitude",
+      "NumericValue": -100100,
+      "StringValue": "gratitude",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-O-7ce0d2a7",
+      "CodeType": "Meta",
+      "MetaCode": "other",
+      "DisplayText": "meta: other",
+      "NumericValue": -100110,
+      "StringValue": "other",
       "VisibleInCoda": true
     }
   ]
