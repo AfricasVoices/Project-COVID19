@@ -297,19 +297,19 @@ if __name__ == "__main__":
             code_to_messages = dict()
             for code in cc.code_scheme.codes:
                 code_to_messages[code.string_value] = []
-                
+
             for msg in messages:
-                if msg[CONSENT_WITHDRAWN_KEY] == Codes.TRUE:
+                if not AnalysisUtils.opt_in(msg, CONSENT_WITHDRAWN_KEY, plan):
                     continue
 
                 for label in msg[cc.coded_field]:
                     code = cc.code_scheme.get_code_with_code_id(label["CodeID"])
                     code_to_messages[code.string_value].append(msg[plan.raw_field])
-                    
-            for code_string_value, messages in code_to_messages.items():
+
+            for code_string_value in code_to_messages:
                 # Sample for at most 100 messages (note: this will give a different sample on each pipeline run)
-                sample_size = min(100, len(messages))
-                sample_messages = random.sample(messages, sample_size)
+                sample_size = min(100, len(code_to_messages[code_string_value]))
+                sample_messages = random.sample(code_to_messages[code_string_value], sample_size)
 
                 for msg in sample_messages:
                     samples.append({
