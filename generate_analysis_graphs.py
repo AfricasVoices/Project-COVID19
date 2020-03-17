@@ -1,6 +1,7 @@
 import argparse
 import csv
 import json
+import random
 from collections import OrderedDict
 from glob import glob
 
@@ -287,6 +288,44 @@ if __name__ == "__main__":
                 row.update(survey_counts)
                 writer.writerow(row)
                 last_row_episode = episode
+                
+    # Export a random sample of 100 messages for each normal code
+    log.info("Exporting samples of up to 100 messages for each normal code...")
+    samples = []  # of dict
+    for plan in PipelineConfiguration.RQA_CODING_PLANS:
+        for cc in plan.coding_configurations:
+            code_to_messages = dict()
+            for code in cc.code_scheme.codes:
+                code_to_messages[code.string_value] = []
+                
+            for msg in messages:
+                if msg[CONSENT_WITHDRAWN_KEY] == Codes.TRUE:
+                    continue
+
+                for label in msg[cc.coded_field]:
+                    code = cc.code_scheme.get_code_with_code_id(label["CodeID"])
+                    code_to_messages[code.string_value].append(msg[plan.raw_field])
+                    
+            for code_string_value, messages in code_to_messages.items():
+                # Sample for at most 100 messages (note: this will give a different sample on each pipeline run)
+                sample_size = min(100, len(messages))
+                sample_messages = random.sample(messages, sample_size)
+
+                for msg in sample_messages:
+                    samples.append({
+                        "Episode": plan.dataset_name,
+                        "Code Scheme": cc.code_scheme.name,
+                        "Code": code_string_value,
+                        "Sample Message": msg
+                    })
+
+    with open(f"{output_dir}/sample_messages.csv", "w") as f:
+        headers = ["Episode", "Code Scheme", "Code", "Sample Message"]
+        writer = csv.DictWriter(f, fieldnames=headers, lineterminator="\n")
+        writer.writeheader()
+
+        for sample in samples:
+            writer.writerow(sample)
 
     log.info("Graphing the per-episode engagement counts...")
     # Graph the number of messages in each episode

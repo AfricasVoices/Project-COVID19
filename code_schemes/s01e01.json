@@ -61,6 +61,102 @@
       "Shortcut": "o"
     },
     {
+      "CodeID": "code-a5461281",
+      "CodeType": "Normal",
+      "DisplayText": "about coronavirus",
+      "NumericValue": 4,
+      "StringValue": "about_coronavirus",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-7f007597",
+      "CodeType": "Normal",
+      "DisplayText": "symptoms",
+      "NumericValue": 5,
+      "StringValue": "symptoms",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-80d7819a",
+      "CodeType": "Normal",
+      "DisplayText": "how to prevent",
+      "NumericValue": 6,
+      "StringValue": "how_to_prevent",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-185ceeaf",
+      "CodeType": "Normal",
+      "DisplayText": "how to treat",
+      "NumericValue": 7,
+      "StringValue": "how_to_treat",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-6240de64",
+      "CodeType": "Normal",
+      "DisplayText": "what is govt policy",
+      "NumericValue": 8,
+      "StringValue": "what_is_govt_policy",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-76e878e0",
+      "CodeType": "Normal",
+      "DisplayText": "kenya update",
+      "NumericValue": 9,
+      "StringValue": "kenya_update",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-5359d609",
+      "CodeType": "Normal",
+      "DisplayText": "rumour/stigma/misinfo",
+      "NumericValue": 10,
+      "StringValue": "rumour_stigma_misinfo",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-78880970",
+      "CodeType": "Normal",
+      "DisplayText": "opinion on govt/policy",
+      "NumericValue": 11,
+      "StringValue": "opinion_on_govt_policy",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-8becbe49",
+      "CodeType": "Normal",
+      "DisplayText": "collective hope",
+      "NumericValue": 12,
+      "StringValue": "collective_hope",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-0d9269fd",
+      "CodeType": "Normal",
+      "DisplayText": "anxiety/panic",
+      "NumericValue": 13,
+      "StringValue": "anxiety_panic",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-763611b9",
+      "CodeType": "Normal",
+      "DisplayText": "how spread/transmitted",
+      "NumericValue": 15,
+      "StringValue": "how_spread_transmitted",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-2909afad",
+      "CodeType": "Normal",
+      "DisplayText": "other theme",
+      "NumericValue": 14,
+      "StringValue": "other_theme",
+      "VisibleInCoda": true
+    },
+    {
       "CodeID": "code-NA-f93d3eb7",
       "CodeType": "Control",
       "ControlCode": "NA",
@@ -175,7 +271,7 @@
       "DisplayText": "meta: similar content",
       "NumericValue": -100050,
       "StringValue": "similar_content",
-      "VisibleInCoda": true
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-PI-83b90d32",
@@ -184,7 +280,7 @@
       "DisplayText": "meta: participation incentive",
       "NumericValue": -100060,
       "StringValue": "participation_incentive",
-      "VisibleInCoda": true
+      "VisibleInCoda": false
     },
     {
       "CodeID": "code-EC-3a704f5b",
@@ -193,6 +289,24 @@
       "DisplayText": "meta: exclusion complaint",
       "NumericValue": -100070,
       "StringValue": "exclusion_complaint",
+      "VisibleInCoda": false
+    },
+    {
+      "CodeID": "code-GR-e6de1b7e",
+      "CodeType": "Meta",
+      "MetaCode": "gratitude",
+      "DisplayText": "meta: gratitude",
+      "NumericValue": -100100,
+      "StringValue": "gratitude",
+      "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-O-7ce0d2a7",
+      "CodeType": "Meta",
+      "MetaCode": "other",
+      "DisplayText": "meta: other",
+      "NumericValue": -100110,
+      "StringValue": "other",
       "VisibleInCoda": true
     }
   ]
