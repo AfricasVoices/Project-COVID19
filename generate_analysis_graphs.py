@@ -6,6 +6,7 @@ from collections import OrderedDict
 from glob import glob
 
 import altair
+import plotly.express as px
 from core_data_modules.cleaners import Codes
 from core_data_modules.data_models.code_scheme import CodeTypes
 from core_data_modules.logging import Logger
@@ -394,15 +395,22 @@ if __name__ == "__main__":
                         if ind[f"{cc.analysis_file_key}{code.string_value}"] == Codes.MATRIX_1:
                             label_counts[code.string_value] += 1
 
-            chart = altair.Chart(
-                altair.Data(values=[{"label": k, "count": v} for k, v in label_counts.items()])
-            ).mark_bar().encode(
-                x=altair.X("label:N", title="Label", sort=list(label_counts.keys())),
-                y=altair.Y("count:Q", title="Number of Individuals")
-            ).properties(
-                title=f"Season Distribution: {cc.analysis_file_key}"
-            )
-            chart.save(f"{output_dir}/graphs/season_distribution_{cc.analysis_file_key}.png", scale_factor=IMG_SCALE_FACTOR)
+            data = [{"label": k, "count": v} for k, v in label_counts.items()]
+            fig = px.bar(data, x="label", y="count")
+            fig.update_layout(plot_bgcolor="white", title_text=f"Season Distribution: {cc.analysis_file_key}")
+            fig.update_xaxes(title_text="Label", showgrid=False, tickangle=0, linecolor="#aaa")
+            fig.update_yaxes(title_text="Number of Individuals", gridcolor="#aaa", linecolor="#aaa")
+            fig.write_image(f"{output_dir}/graphs/season_distribution_{cc.analysis_file_key}.png", scale=IMG_SCALE_FACTOR)
+
+            # chart = altair.Chart(
+            #     altair.Data(values=[{"label": k, "count": v} for k, v in label_counts.items()])
+            # ).mark_bar().encode(
+            #     x=altair.X("label:N", title="Label", sort=list(label_counts.keys())),
+            #     y=altair.Y("count:Q", title="Number of Individuals")
+            # ).properties(
+            #     title=f"Season Distribution: {cc.analysis_file_key}"
+            # )
+            # chart.save(f"{output_dir}/graphs/season_distribution_{cc.analysis_file_key}.png", scale_factor=IMG_SCALE_FACTOR)
 
     if pipeline_configuration.drive_upload is not None:
         log.info("Uploading CSVs to Drive...")

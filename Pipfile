@@ -13,6 +13,9 @@ google-cloud-storage = "*"
 altair = "*"
 selenium = "*"
 pyinstrument = "*"
+plotly = "*"
+requests = "*"
+psutil = "*"
 
 [dev-packages]
 

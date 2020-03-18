@@ -38,6 +38,37 @@ RUN if [ "$INSTALL_MEMORY_PROFILER" = "true" ]; then \
         pip install memory_profiler; \
     fi
 
+#WORKDIR /tmp
+#RUN wget --no-verbose -O orca.AppImage https://github.com/plotly/orca/releases/download/v1.3.0/orca-1.3.0.AppImage
+#RUN chmod +x orca.AppImage
+#RUN ./orca.AppImage --appimage-extract
+#RUN printf '#!/bin/bash \nxvfb-run --auto-servernum --server-args "-screen 0 640x480x24" /tmp/squashfs-root/app/orca "$@"' > /usr/bin/orca
+#RUN chmod -R 777 squashfs-root/
+##RUN chmod +x /usr/bin/orca
+#RUN orca --help
+#RUN chmod +x /tmp/orca.AppImage && ln -s /tmp/orca.AppImage /usr/local/bin/orca
+
+# Plotly depedencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        wget \
+        xvfb \
+        xauth \
+        libgtk2.0-0 \
+        libxtst6 \
+        libxss1 \
+        libgconf-2-4 \
+        libnss3 \
+        libasound2 && \
+    mkdir -p /opt/orca && \
+    cd /opt/orca && \
+    wget --no-verbose https://github.com/plotly/orca/releases/download/v1.2.1/orca-1.2.1-x86_64.AppImage && \
+    chmod +x orca-1.2.1-x86_64.AppImage && \
+    ./orca-1.2.1-x86_64.AppImage --appimage-extract && \
+    rm orca-1.2.1-x86_64.AppImage && \
+    printf '#!/bin/bash \nxvfb-run --auto-servernum --server-args "-screen 0 640x480x24" /opt/orca/squashfs-root/app/orca "$@"' > /usr/bin/orca && \
+    chmod +x /usr/bin/orca
+
 # Make a directory for private credentials files
 RUN mkdir /credentials
 
@@ -46,6 +77,8 @@ RUN mkdir /data
 
 # Set working directory
 WORKDIR /app
+
+RUN apt-get install -y gcc
 
 # Install project dependencies.
 ADD Pipfile /app
