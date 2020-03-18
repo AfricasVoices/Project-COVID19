@@ -49,6 +49,7 @@ RUN if [ "$INSTALL_MEMORY_PROFILER" = "true" ]; then \
 #RUN chmod +x /tmp/orca.AppImage && ln -s /tmp/orca.AppImage /usr/local/bin/orca
 
 # Plotly depedencies
+ARG ORCA_VERSION="1.2.1"
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         wget \
@@ -62,10 +63,10 @@ RUN apt-get update && \
         libasound2 && \
     mkdir -p /opt/orca && \
     cd /opt/orca && \
-    wget --no-verbose https://github.com/plotly/orca/releases/download/v1.2.1/orca-1.2.1-x86_64.AppImage && \
-    chmod +x orca-1.2.1-x86_64.AppImage && \
-    ./orca-1.2.1-x86_64.AppImage --appimage-extract && \
-    rm orca-1.2.1-x86_64.AppImage && \
+    wget --no-verbose -O /opt/orca/orca-${ORCA_VERSION}.AppImage https://github.com/plotly/orca/releases/download/v${ORCA_VERSION}/orca-${ORCA_VERSION}-x86_64.AppImage && \
+    chmod +x orca-${ORCA_VERSION}.AppImage && \
+    ./orca-${ORCA_VERSION}.AppImage --appimage-extract && \
+    rm orca-${ORCA_VERSION}.AppImage && \
     printf '#!/bin/bash \nxvfb-run --auto-servernum --server-args "-screen 0 640x480x24" /opt/orca/squashfs-root/app/orca "$@"' > /usr/bin/orca && \
     chmod +x /usr/bin/orca
 
