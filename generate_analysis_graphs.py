@@ -360,15 +360,13 @@ if __name__ == "__main__":
             continue
 
         log.info(f"Graphing the distribution of codes for {demographic}...")
-        altair.Chart(
-            altair.Data(values=[{"code_string_value": code_string_value, "number_of_individuals": number_of_individuals}
-                                for code_string_value, number_of_individuals in counts.items()])
-        ).mark_bar().encode(
-            x=altair.X("code_string_value:N", title="Code", sort=list(counts.keys())),
-            y=altair.Y("number_of_individuals:Q", title="Number of Individuals")
-        ).properties(
-            title=f"Season Distribution: {demographic}"
-        ).save(f"{output_dir}/graphs/season_distribution_{demographic}.png", scale_factor=IMG_SCALE_FACTOR)
+        fig = px.bar([{"Label": code_string_value, "Number of Participants": number_of_participants}
+                      for code_string_value, number_of_participants in counts.items()],
+                     x="Label", y="Number of Participants", template="plotly_white",
+                     width=len(counts) * 20 + 100,
+                     title=f"Season Distribution: {demographic}")
+        fig.update_xaxes(type="category", tickangle=-60, dtick=1)
+        fig.write_image(f"{output_dir}/graphs/season_distribution_{demographic}.png", scale=IMG_SCALE_FACTOR)
 
     # Plot the per-season distribution of responses for each survey question, per individual
     for plan in PipelineConfiguration.RQA_CODING_PLANS + PipelineConfiguration.SURVEY_CODING_PLANS:
