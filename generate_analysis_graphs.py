@@ -404,6 +404,8 @@ if __name__ == "__main__":
             fig.write_image(f"{output_dir}/graphs/season_distribution_{cc.analysis_file_key}.png", scale=IMG_SCALE_FACTOR)
 
     log.info("Graphing pie chart of normal codes for gender...")
+    # TODO: Gender is hard-coded here for COVID19. If we need this in future, but don't want to extend to other
+    #       demographic variables, then this will need to be controlled from configuration
     gender_distribution = demographic_distributions["gender"]
     normal_gender_distribution = []
     for code in CodeSchemes.GENDER.codes:
@@ -419,6 +421,8 @@ if __name__ == "__main__":
 
     log.info("Graphing normal themes by gender...")
     # Adapt the theme distributions produced above to extract the normal RQA + gender codes, and graph by gender
+    # TODO: Gender is hard-coded here for COVID19. If we need this in future, but don't want to extend to other
+    #       demographic variables, then this will need to be controlled from configuration
     for plan in PipelineConfiguration.RQA_CODING_PLANS:
         episode = episodes[plan.raw_field]
         normal_themes = dict()
@@ -437,14 +441,23 @@ if __name__ == "__main__":
                 normal_by_gender.append({
                     "RQA Theme": theme,
                     "Gender": gender_code.string_value,
-                    "Number of Participants": demographic_counts[f"gender:{gender_code.string_value}"]
+                    "Number of Participants": demographic_counts[f"gender:{gender_code.string_value}"],
+                    "Fraction of Relevant Participants":
+                        demographic_counts[f"gender:{gender_code.string_value}"] /
+                        episode["Total Relevant Participants"][f"gender:{gender_code.string_value}"]
                 })
 
         fig = px.bar(normal_by_gender, x="RQA Theme", y="Number of Participants", color="Gender", barmode="group",
                      template="plotly_white")
-        fig.update_layout(title_text=f"{plan.raw_field} by gender")
+        fig.update_layout(title_text=f"{plan.raw_field} by gender (absolute)")
         fig.update_xaxes(tickangle=-60)
         fig.write_image(f"{output_dir}/graphs/{plan.raw_field}_by_gender_absolute.png", scale=IMG_SCALE_FACTOR)
+
+        fig = px.bar(normal_by_gender, x="RQA Theme", y="Fraction of Relevant Participants", color="Gender", barmode="group",
+                     template="plotly_white")
+        fig.update_layout(title_text=f"{plan.raw_field} by gender (normalised)")
+        fig.update_xaxes(tickangle=-60)
+        fig.write_image(f"{output_dir}/graphs/{plan.raw_field}_by_gender_normalised.png", scale=IMG_SCALE_FACTOR)
 
     if pipeline_configuration.drive_upload is not None:
         log.info("Uploading CSVs to Drive...")
