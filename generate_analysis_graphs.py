@@ -15,6 +15,7 @@ from core_data_modules.util import IOUtils
 from storage.google_cloud import google_cloud_utils
 from storage.google_drive import drive_client_wrapper
 
+from configuration.code_schemes import CodeSchemes
 from src import AnalysisUtils
 from src.lib import PipelineConfiguration
 from src.lib.configuration_objects import CodingModes
@@ -395,22 +396,55 @@ if __name__ == "__main__":
                         if ind[f"{cc.analysis_file_key}{code.string_value}"] == Codes.MATRIX_1:
                             label_counts[code.string_value] += 1
 
-            data = [{"label": k, "count": v} for k, v in label_counts.items()]
-            fig = px.bar(data, x="label", y="count")
+            data = [{"Label": k, "Number of Participants": v} for k, v in label_counts.items()]
+            fig = px.bar(data, x="Label", y="Number of Participants", template="plotly_white")
             fig.update_layout(plot_bgcolor="white", title_text=f"Season Distribution: {cc.analysis_file_key}")
-            fig.update_xaxes(title_text="Label", showgrid=False, tickangle=0, linecolor="#aaa")
-            fig.update_yaxes(title_text="Number of Individuals", gridcolor="#aaa", linecolor="#aaa")
+            fig.update_xaxes(title_text="Label", showgrid=False, tickangle=-60)
+            fig.update_yaxes(title_text="Number of Participants")
             fig.write_image(f"{output_dir}/graphs/season_distribution_{cc.analysis_file_key}.png", scale=IMG_SCALE_FACTOR)
 
-            # chart = altair.Chart(
-            #     altair.Data(values=[{"label": k, "count": v} for k, v in label_counts.items()])
-            # ).mark_bar().encode(
-            #     x=altair.X("label:N", title="Label", sort=list(label_counts.keys())),
-            #     y=altair.Y("count:Q", title="Number of Individuals")
-            # ).properties(
-            #     title=f"Season Distribution: {cc.analysis_file_key}"
-            # )
-            # chart.save(f"{output_dir}/graphs/season_distribution_{cc.analysis_file_key}.png", scale_factor=IMG_SCALE_FACTOR)
+    log.info("Graphing pie chart of normal codes for gender...")
+    gender_distribution = demographic_distributions["gender"]
+    normal_gender_distribution = []
+    for code in CodeSchemes.GENDER.codes:
+        if code.code_type == CodeTypes.NORMAL:
+            normal_gender_distribution.append({
+                "Gender": code.string_value,
+                "Number of Participants": gender_distribution[code.string_value]
+            })
+    fig = px.pie(normal_gender_distribution, names="Gender", values="Number of Participants",
+                 title="Season Distribution: gender", template="plotly_white")
+    fig.update_traces(textinfo="value")
+    fig.write_image(f"{output_dir}/graphs/season_distribution_gender_pie.png", scale=IMG_SCALE_FACTOR)
+
+    log.info("Graphing normal themes by gender...")
+    # Adapt the theme distributions produced above to extract the normal RQA + gender codes, and graph by gender
+    for plan in PipelineConfiguration.RQA_CODING_PLANS:
+        episode = episodes[plan.raw_field]
+        normal_themes = dict()
+
+        for cc in plan.coding_configurations:
+            for code in cc.code_scheme.codes:
+                if code.code_type == CodeTypes.NORMAL and code.string_value not in {"knowledge", "attitude", "behaviour"}:
+                    normal_themes[code.string_value] = episode[f"{cc.analysis_file_key}{code.string_value}"]
+
+        normal_by_gender = []
+        for theme, demographic_counts in normal_themes.items():
+            for gender_code in CodeSchemes.GENDER.codes:
+                if gender_code.code_type != CodeTypes.NORMAL:
+                    continue
+
+                normal_by_gender.append({
+                    "RQA Theme": theme,
+                    "Gender": gender_code.string_value,
+                    "Number of Participants": demographic_counts[f"gender:{gender_code.string_value}"]
+                })
+
+        fig = px.bar(normal_by_gender, x="RQA Theme", y="Number of Participants", color="Gender", barmode="group",
+                     template="plotly_white")
+        fig.update_layout(title_text=f"{plan.raw_field} by gender")
+        fig.update_xaxes(tickangle=-60)
+        fig.write_image(f"{output_dir}/graphs/{plan.raw_field}_by_gender_absolute.png", scale=IMG_SCALE_FACTOR)
 
     if pipeline_configuration.drive_upload is not None:
         log.info("Uploading CSVs to Drive...")
