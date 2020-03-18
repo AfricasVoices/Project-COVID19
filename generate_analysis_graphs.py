@@ -397,10 +397,9 @@ if __name__ == "__main__":
                             label_counts[code.string_value] += 1
 
             data = [{"Label": k, "Number of Participants": v} for k, v in label_counts.items()]
-            fig = px.bar(data, x="Label", y="Number of Participants", template="plotly_white")
-            fig.update_layout(plot_bgcolor="white", title_text=f"Season Distribution: {cc.analysis_file_key}")
-            fig.update_xaxes(title_text="Label", showgrid=False, tickangle=-60)
-            fig.update_yaxes(title_text="Number of Participants")
+            fig = px.bar(data, x="Label", y="Number of Participants", template="plotly_white",
+                         title=f"Season Distribution: {cc.analysis_file_key}")
+            fig.update_xaxes(tickangle=-60)
             fig.write_image(f"{output_dir}/graphs/season_distribution_{cc.analysis_file_key}.png", scale=IMG_SCALE_FACTOR)
 
     log.info("Graphing pie chart of normal codes for gender...")
