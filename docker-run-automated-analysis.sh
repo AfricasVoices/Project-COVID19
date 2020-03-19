@@ -44,7 +44,7 @@ if [[ "$PROFILE_CPU" = true ]]; then
     PROFILE_CPU_CMD="-m pyinstrument -o /data/cpu.prof --renderer html --"
     SYS_PTRACE_CAPABILITY="--cap-add SYS_PTRACE"
 fi
-CMD="pipenv run python -u $PROFILE_CPU_CMD generate_analysis_graphs.py \
+CMD="pipenv run python -u $PROFILE_CPU_CMD automated_analysis.py \
     \"$USER\" /credentials/google-cloud-credentials.json /data/pipeline_configuration.json \
     /data/messages-traced-data.jsonl /data/individuals-traced-data.jsonl /data/output-graphs
 "
