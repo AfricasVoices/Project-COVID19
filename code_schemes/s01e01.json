@@ -93,6 +93,14 @@
       "VisibleInCoda": true
     },
     {
+      "CodeID": "code-763611b9",
+      "CodeType": "Normal",
+      "DisplayText": "how spread/transmitted",
+      "NumericValue": 15,
+      "StringValue": "how_spread_transmitted",
+      "VisibleInCoda": true
+    },
+    {
       "CodeID": "code-6240de64",
       "CodeType": "Normal",
       "DisplayText": "what is govt policy",
@@ -138,14 +146,6 @@
       "DisplayText": "anxiety/panic",
       "NumericValue": 13,
       "StringValue": "anxiety_panic",
-      "VisibleInCoda": true
-    },
-    {
-      "CodeID": "code-763611b9",
-      "CodeType": "Normal",
-      "DisplayText": "how spread/transmitted",
-      "NumericValue": 15,
-      "StringValue": "how_spread_transmitted",
       "VisibleInCoda": true
     },
     {
