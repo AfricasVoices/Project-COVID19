@@ -5,12 +5,16 @@ import random
 from collections import OrderedDict
 from glob import glob
 
+import geopandas
+import matplotlib.pyplot as plt
+import pandas
 import plotly.express as px
 from core_data_modules.cleaners import Codes
 from core_data_modules.data_models.code_scheme import CodeTypes
 from core_data_modules.logging import Logger
 from core_data_modules.traced_data.io import TracedDataJsonIO
 from core_data_modules.util import IOUtils
+from matplotlib.colors import LinearSegmentedColormap
 from storage.google_cloud import google_cloud_utils
 from storage.google_drive import drive_client_wrapper
 
@@ -328,6 +332,31 @@ if __name__ == "__main__":
 
         for sample in samples:
             writer.writerow(sample)
+
+    log.info("Loading the Kenya county geojson...")
+    counties_map = geopandas.read_file("src/kenya_counties.geojson")
+
+    log.info("Generating a map of per-county participation for the season")
+    county_frequencies = []
+    for code in CodeSchemes.KENYA_COUNTY.codes:
+        if code.code_type == CodeTypes.NORMAL:
+            county_frequencies.append({
+                "DISTRICT": code.string_value,
+                "Frequency": demographic_distributions["county"][code.string_value]
+            })
+    counties_map = counties_map.merge(pandas.DataFrame(county_frequencies), on="DISTRICT")
+
+    avf_color_map = LinearSegmentedColormap.from_list("avf_color_map", ["#fff", "#993e46"])
+    counties_map.plot(column="Frequency", scheme="fisher_jenks", k=5, cmap=avf_color_map,
+                      linewidth=0.25, edgecolor="black")
+    plt.axis("off")
+
+    # for i, county in counties_map.iterrows():
+    #     plt.annotate(s=county["Frequency"], xy=county.geometry.centroid.coords[0], ha='center')
+
+    plt.savefig(f"{output_dir}/test.png", dpi=600, bbox_inches="tight")
+
+    exit(0)
 
     log.info("Graphing the per-episode engagement counts...")
     # Graph the number of messages in each episode
