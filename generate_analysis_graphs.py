@@ -5,7 +5,6 @@ import random
 from collections import OrderedDict
 from glob import glob
 
-import altair
 import plotly.express as px
 from core_data_modules.cleaners import Codes
 from core_data_modules.data_models.code_scheme import CodeTypes
@@ -331,26 +330,18 @@ if __name__ == "__main__":
 
     log.info("Graphing the per-episode engagement counts...")
     # Graph the number of messages in each episode
-    altair.Chart(
-        altair.Data(values=[{"episode": x["Episode"], "count": x["Total Messages with Opt-Ins"]}
-                            for x in engagement_counts.values() if x["Episode"] != "Total"])
-    ).mark_bar().encode(
-        x=altair.X("episode:N", title="Episode"),
-        y=altair.Y("count:Q", title="Number of Messages with Opt-ins")
-    ).properties(
-        title="Messages per Episode"
-    ).save(f"{output_dir}/graphs/messages_per_episode.png", scale_factor=IMG_SCALE_FACTOR)
+    fig = px.bar([x for x in engagement_counts.values() if x["Episode"] != "Total"],
+                 x="Episode", y="Total Messages with Opt-Ins", template="plotly_white",
+                 title="Messages/Episode", width=len(engagement_counts) * 20 + 150)
+    fig.update_xaxes(tickangle=-60)
+    fig.write_image(f"{output_dir}/graphs/messages_per_episode.png", scale=IMG_SCALE_FACTOR)
 
     # Graph the number of participants in each episode
-    altair.Chart(
-        altair.Data(values=[{"episode": x["Episode"], "count": x["Total Participants with Opt-Ins"]}
-                            for x in engagement_counts.values() if x["Episode"] != "Total"])
-    ).mark_bar().encode(
-        x=altair.X("episode:N", title="Episode"),
-        y=altair.Y("count:Q", title="Number of Participants with Opt-ins")
-    ).properties(
-        title="Participants per Episode"
-    ).save(f"{output_dir}/graphs/participants_per_episode.png", scale_factor=IMG_SCALE_FACTOR)
+    fig = px.bar([x for x in engagement_counts.values() if x["Episode"] != "Total"],
+                 x="Episode", y="Total Participants with Opt-Ins", template="plotly_white",
+                 title="Participants/Episode", width=len(engagement_counts) * 20 + 150)
+    fig.update_xaxes(tickangle=-60)
+    fig.write_image(f"{output_dir}/graphs/participants_per_episode.png", scale=IMG_SCALE_FACTOR)
 
     log.info("Graphing the demographic distributions...")
     for demographic, counts in demographic_distributions.items():
@@ -360,15 +351,12 @@ if __name__ == "__main__":
             continue
 
         log.info(f"Graphing the distribution of codes for {demographic}...")
-        altair.Chart(
-            altair.Data(values=[{"code_string_value": code_string_value, "number_of_individuals": number_of_individuals}
-                                for code_string_value, number_of_individuals in counts.items()])
-        ).mark_bar().encode(
-            x=altair.X("code_string_value:N", title="Code", sort=list(counts.keys())),
-            y=altair.Y("number_of_individuals:Q", title="Number of Individuals")
-        ).properties(
-            title=f"Season Distribution: {demographic}"
-        ).save(f"{output_dir}/graphs/season_distribution_{demographic}.png", scale_factor=IMG_SCALE_FACTOR)
+        fig = px.bar([{"Label": code_string_value, "Number of Participants": number_of_participants}
+                      for code_string_value, number_of_participants in counts.items()],
+                     x="Label", y="Number of Participants", template="plotly_white",
+                     title=f"Season Distribution: {demographic}", width=len(counts) * 20 + 150)
+        fig.update_xaxes(type="category", tickangle=-60, dtick=1)
+        fig.write_image(f"{output_dir}/graphs/season_distribution_{demographic}.png", scale=IMG_SCALE_FACTOR)
 
     # Plot the per-season distribution of responses for each survey question, per individual
     for plan in PipelineConfiguration.RQA_CODING_PLANS + PipelineConfiguration.SURVEY_CODING_PLANS:
