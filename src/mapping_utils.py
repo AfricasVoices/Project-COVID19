@@ -36,7 +36,7 @@ class MappingUtils(object):
             # largest_polygon = max(county.geometry, key=lambda p: p.area)
             # print(polylabel(largest_polygon, 20).coords[0])
             plt.annotate(s=frequencies[county[id_key]],
-                         xy=(county.x, county.y),
+                         xy=(county.label_x, county.label_y),
                          ha='center', va="center", fontsize=3.8)
 
 
