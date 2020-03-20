@@ -333,7 +333,7 @@ if __name__ == "__main__":
             writer.writerow(sample)
 
     log.info("Loading the Kenya county geojson...")
-    counties_map = geopandas.read_file("src/kenya_counties.geojson")
+    counties_map = geopandas.read_file("geojson/kenya_counties.geojson")
 
     log.info("Generating a map of per-county participation for the season")
     county_frequencies = dict()
