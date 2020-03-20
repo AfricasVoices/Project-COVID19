@@ -383,7 +383,6 @@ if __name__ == "__main__":
                 plt.close()
 
                 map_index += 1
-    exit(0)
 
     log.info("Graphing the per-episode engagement counts...")
     # Graph the number of messages in each episode
