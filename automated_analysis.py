@@ -340,15 +340,16 @@ if __name__ == "__main__":
     county_frequencies = []
     for code in CodeSchemes.KENYA_COUNTY.codes:
         if code.code_type == CodeTypes.NORMAL:
+            frequency = demographic_distributions["county"][code.string_value]
             county_frequencies.append({
                 "DISTRICT": code.string_value,
-                "Frequency": demographic_distributions["county"][code.string_value]
+                "Frequency": frequency if frequency > 0 else None
             })
     counties_map = counties_map.merge(pandas.DataFrame(county_frequencies), on="DISTRICT")
 
-    avf_color_map = LinearSegmentedColormap.from_list("avf_color_map", ["#fff", "#993e46"])
+    avf_color_map = LinearSegmentedColormap.from_list("avf_color_map", ["#e6cfd1", "#993e46"])
     counties_map.plot(column="Frequency", scheme="fisher_jenks", k=5, cmap=avf_color_map,
-                      linewidth=0.25, edgecolor="black")
+                      linewidth=0.25, edgecolor="black", missing_kwds={"edgecolor": "black", "facecolor": "white"})
     plt.axis("off")
 
     # for i, county in counties_map.iterrows():
