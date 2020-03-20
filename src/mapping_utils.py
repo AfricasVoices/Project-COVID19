@@ -37,7 +37,7 @@ class MappingUtils(object):
         # Using this method prevents a few dense
         geo_data.plot(column="Frequency", cmap=cls.AVF_COLOR_MAP,
                       scheme="fisher_jenks", k=min(5, len({f for f in frequencies.values() if f != 0})),
-                      linewidth=1, edgecolor="black",
+                      linewidth=0.1, edgecolor="black",
                       missing_kwds={"edgecolor": "black", "facecolor": "white"})
         plt.axis("off")
 
