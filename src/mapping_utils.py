@@ -31,7 +31,9 @@ class MappingUtils(object):
                       linewidth=0.25, edgecolor="black", missing_kwds={"edgecolor": "black", "facecolor": "white"})
         plt.axis("off")
 
-        # for i, county in counties_map.iterrows():
-        #     plt.annotate(s=county["Frequency"], xy=county.geometry.centroid.coords[0], ha='center')
+        for i, county in geo_data.iterrows():
+            plt.annotate(s=frequencies[county[id_key]],
+                         xy=county.geometry.centroid.coords[0],
+                         ha='center', fontsize=4)
 
 
