@@ -7,14 +7,12 @@ from glob import glob
 
 import geopandas
 import matplotlib.pyplot as plt
-import pandas
 import plotly.express as px
 from core_data_modules.cleaners import Codes
 from core_data_modules.data_models.code_scheme import CodeTypes
 from core_data_modules.logging import Logger
 from core_data_modules.traced_data.io import TracedDataJsonIO
 from core_data_modules.util import IOUtils
-from matplotlib.colors import LinearSegmentedColormap
 from storage.google_cloud import google_cloud_utils
 from storage.google_drive import drive_client_wrapper
 
@@ -22,6 +20,7 @@ from configuration.code_schemes import CodeSchemes
 from src import AnalysisUtils
 from src.lib import PipelineConfiguration
 from src.lib.configuration_objects import CodingModes
+from src.mapping_utils import MappingUtils
 
 log = Logger(__name__)
 
@@ -337,24 +336,12 @@ if __name__ == "__main__":
     counties_map = geopandas.read_file("src/kenya_counties.geojson")
 
     log.info("Generating a map of per-county participation for the season")
-    county_frequencies = []
+    county_frequencies = dict()
     for code in CodeSchemes.KENYA_COUNTY.codes:
         if code.code_type == CodeTypes.NORMAL:
-            frequency = demographic_distributions["county"][code.string_value]
-            county_frequencies.append({
-                "DISTRICT": code.string_value,
-                "Frequency": frequency if frequency > 0 else None
-            })
-    counties_map = counties_map.merge(pandas.DataFrame(county_frequencies), on="DISTRICT")
+            county_frequencies[code.string_value] = demographic_distributions["county"][code.string_value]
 
-    avf_color_map = LinearSegmentedColormap.from_list("avf_color_map", ["#e6cfd1", "#993e46"])
-    counties_map.plot(column="Frequency", scheme="fisher_jenks", k=5, cmap=avf_color_map,
-                      linewidth=0.25, edgecolor="black", missing_kwds={"edgecolor": "black", "facecolor": "white"})
-    plt.axis("off")
-
-    # for i, county in counties_map.iterrows():
-    #     plt.annotate(s=county["Frequency"], xy=county.geometry.centroid.coords[0], ha='center')
-
+    MappingUtils.render_map(counties_map, "DISTRICT", county_frequencies)
     plt.savefig(f"{output_dir}/test.png", dpi=600, bbox_inches="tight")
 
     exit(0)
