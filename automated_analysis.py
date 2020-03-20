@@ -343,27 +343,46 @@ if __name__ == "__main__":
             county_frequencies[code.string_value] = demographic_distributions["county"][code.string_value]
 
     MappingUtils.plot_frequency_map(counties_map, "avf_id", county_frequencies)
-    plt.savefig(f"{output_dir}/maps/total_participants.png", dpi=1200, bbox_inches="tight")
+    plt.savefig(f"{output_dir}/maps/county_total_participants.png", dpi=1200, bbox_inches="tight")
+    plt.close()
 
-    image_index = 1
     for plan in PipelineConfiguration.RQA_CODING_PLANS:
         episode = episodes[plan.raw_field]
 
-        for theme, demographic_counts in episode.items():
-            log.info(f"Generating a map of per-county participation for {theme}...")
-            theme_county_frequencies = dict()
-
+        for cc in plan.coding_configurations:
+            # Plot a map of the total relevant participants for this coding configuration.
+            rqa_total_county_frequencies = dict()
             for county_code in CodeSchemes.KENYA_COUNTY.codes:
-                if county_code.code_type != CodeTypes.NORMAL:
+                if county_code.code_type == CodeTypes.NORMAL:
+                    rqa_total_county_frequencies[county_code.string_value] = \
+                        episode["Total Relevant Participants"][f"county:{county_code.string_value}"]
+            MappingUtils.plot_frequency_map(counties_map, "avf_id", rqa_total_county_frequencies)
+            plt.savefig(f"{output_dir}/maps/county_{cc.analysis_file_key}_1_total_relevant.png",
+                        dpi=1200, bbox_inches="tight")
+            plt.close()
+
+            # Plot maps of each of the normal themes for this coding configuration.
+            map_index = 2
+            for code in cc.code_scheme.codes:
+                if code.code_type != CodeTypes.NORMAL:
                     continue
 
-                theme_county_frequencies[county_code.string_value] = demographic_counts[f"county:{county_code.string_value}"]
+                theme = f"{cc.analysis_file_key}{code.string_value}"
+                log.info(f"Generating a map of per-county participation for {theme}...")
+                demographic_counts = episode[theme]
 
-            MappingUtils.plot_frequency_map(counties_map, "avf_id", theme_county_frequencies)
-            plt.savefig(f"{output_dir}/maps/{image_index}_{theme}.png", dpi=1200, bbox_inches="tight")
-            image_index += 1
-            if theme == "rqa_s01e01_other_theme":
-                break
+                theme_county_frequencies = dict()
+                for county_code in CodeSchemes.KENYA_COUNTY.codes:
+                    if county_code.code_type == CodeTypes.NORMAL:
+                        theme_county_frequencies[county_code.string_value] = \
+                            demographic_counts[f"county:{county_code.string_value}"]
+
+                MappingUtils.plot_frequency_map(counties_map, "avf_id", theme_county_frequencies)
+                plt.savefig(f"{output_dir}/maps/county_{cc.analysis_file_key}_{map_index}_{code.string_value}.png",
+                            dpi=1200, bbox_inches="tight")
+                plt.close()
+
+                map_index += 1
     exit(0)
 
     log.info("Graphing the per-episode engagement counts...")
