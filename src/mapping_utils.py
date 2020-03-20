@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas
 from matplotlib.colors import LinearSegmentedColormap
+from shapely.algorithms.polylabel import polylabel
 
 
 class MappingUtils(object):
@@ -32,8 +33,10 @@ class MappingUtils(object):
         plt.axis("off")
 
         for i, county in geo_data.iterrows():
+            # largest_polygon = max(county.geometry, key=lambda p: p.area)
+            # print(polylabel(largest_polygon, 20).coords[0])
             plt.annotate(s=frequencies[county[id_key]],
-                         xy=county.geometry.centroid.coords[0],
-                         ha='center', fontsize=4)
+                         xy=(county.x, county.y),
+                         ha='center', va="center", fontsize=3.8)
 
 

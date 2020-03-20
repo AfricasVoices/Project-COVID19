@@ -342,7 +342,7 @@ if __name__ == "__main__":
             county_frequencies[code.string_value] = demographic_distributions["county"][code.string_value]
 
     MappingUtils.render_map(counties_map, "DISTRICT", county_frequencies)
-    plt.savefig(f"{output_dir}/test.png", dpi=600, bbox_inches="tight")
+    plt.savefig(f"{output_dir}/test.png", dpi=1200, bbox_inches="tight")
 
     exit(0)
 
