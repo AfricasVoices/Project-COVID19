@@ -362,7 +362,7 @@ if __name__ == "__main__":
             plt.close()
 
             # Plot maps of each of the normal themes for this coding configuration.
-            map_index = 2
+            map_index = 2  # index 1 was used in the total relevant map's filename.
             for code in cc.code_scheme.codes:
                 if code.code_type != CodeTypes.NORMAL:
                     continue
