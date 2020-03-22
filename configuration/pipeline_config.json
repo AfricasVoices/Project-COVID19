@@ -7,7 +7,8 @@
       "TokenFileURL": "gs://avf-credentials/covid19-text-it-token.txt",
       "ContactsFileName": "covid19_contacts",
       "ActivationFlowNames": [
-        "covid19_s01e01_activation"
+        "covid19_s01e01_activation",
+        "covid19_s01e02_activation"
       ],
       "SurveyFlowNames": [
         "covid19_s01_demog"
@@ -29,6 +30,9 @@
     {"RapidProKey": "Rqa_S01E01 (Text) - covid19_s01e01_activation", "PipelineKey": "rqa_s01e01_raw", "IsActivationMessage": true},
     {"RapidProKey": "Rqa_S01E01 (Run ID) - covid19_s01e01_activation", "PipelineKey": "rqa_s01e01_run_id"},
     {"RapidProKey": "Rqa_S01E01 (Time) - covid19_s01e01_activation", "PipelineKey": "sent_on"},
+    {"RapidProKey": "Rqa_S01E02 (Text) - covid19_s01e02_activation", "PipelineKey": "rqa_s01e02_raw", "IsActivationMessage": true},
+    {"RapidProKey": "Rqa_S01E02 (Run ID) - covid19_s01e02_activation", "PipelineKey": "rqa_s01e02_run_id"},
+    {"RapidProKey": "Rqa_S01E02 (Time) - covid19_s01e02_activation", "PipelineKey": "sent_on"},
 
     {"RapidProKey": "Constituency (Text) - covid19_s01_demog", "PipelineKey": "location_raw"},
     {"RapidProKey": "Constituency (Time) - covid19_s01_demog", "PipelineKey": "location_time"},
