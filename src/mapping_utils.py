@@ -34,7 +34,8 @@ class MappingUtils(object):
 
         # Plot the choropleth map.
         # Frequencies are classed using the Fisher-Jenks method, a standard GIS algorithm for choropleth classification.
-        # Using this method prevents a few dense
+        # Using this method prevents a region with a vastly higher frequency than the others (e.g. a capital city)
+        # from using up all of the colour range, as would happen with a linear scale.
         geo_data.plot(column="Frequency", cmap=cls.AVF_COLOR_MAP,
                       scheme="fisher_jenks", k=min(5, len({f for f in frequencies.values() if f != 0})),
                       linewidth=0.1, edgecolor="black",
