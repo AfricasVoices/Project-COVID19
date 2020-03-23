@@ -25,7 +25,8 @@ IMG_SCALE_FACTOR = 10  # Increase this to increase the resolution of the outputt
 CONSENT_WITHDRAWN_KEY = "consent_withdrawn"
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generates graphs for analysis")
+    parser = argparse.ArgumentParser(description="Runs automated analysis over the outputs produced by "
+                                                 "`generate_outputs.py`, and optionally uploads the outputs to Drive.")
 
     parser.add_argument("user", help="User launching this program")
     parser.add_argument("google_cloud_credentials_file_path", metavar="google-cloud-credentials-file-path",
@@ -39,7 +40,7 @@ if __name__ == "__main__":
     parser.add_argument("individuals_json_input_path", metavar="individuals-json-input-path",
                         help="Path to a JSONL file to read the TracedData of the messages data from")
     parser.add_argument("output_dir", metavar="output-dir",
-                        help="Directory to write the output graphs to")
+                        help="Directory to write the analysis outputs to")
 
     args = parser.parse_args()
 
