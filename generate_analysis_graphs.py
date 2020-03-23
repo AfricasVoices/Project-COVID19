@@ -419,6 +419,11 @@ if __name__ == "__main__":
                 if code.code_type == CodeTypes.NORMAL and code.string_value not in {"knowledge", "attitude", "behaviour"}:
                     normal_themes[code.string_value] = episode[f"{cc.analysis_file_key}{code.string_value}"]
 
+        if len(normal_themes) == 0:
+            log.warning(f"Skipping graphing normal themes by gender for {plan.raw_field} because the scheme does "
+                        f"not contain any normal codes")
+            continue
+
         normal_by_gender = []
         for theme, demographic_counts in normal_themes.items():
             for gender_code in CodeSchemes.GENDER.codes:
