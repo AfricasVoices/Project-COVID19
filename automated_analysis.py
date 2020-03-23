@@ -210,6 +210,7 @@ if __name__ == "__main__":
     def make_survey_counts_dict():
         survey_counts = OrderedDict()
         survey_counts["Total Participants"] = 0
+        survey_counts["Total Participants %"] = None
         for plan in PipelineConfiguration.SURVEY_CODING_PLANS:
             for cc in plan.coding_configurations:
                 if cc.analysis_file_key is None:
@@ -219,6 +220,7 @@ if __name__ == "__main__":
                     if code.control_code == Codes.STOP:
                         continue  # Ignore STOP codes because we already excluded everyone who opted out.
                     survey_counts[f"{cc.analysis_file_key}:{code.string_value}"] = 0
+                    survey_counts[f"{cc.analysis_file_key}:{code.string_value} %"] = None
 
         return survey_counts
 
@@ -239,6 +241,30 @@ if __name__ == "__main__":
                         continue
                     survey_counts[f"{cc.analysis_file_key}:{code.string_value}"] += 1
 
+    def set_survey_percentages(survey_counts, total_survey_counts):
+        if total_survey_counts["Total Participants"] == 0:
+            survey_counts["Total Participants %"] = "-"
+        else:
+            survey_counts["Total Participants %"] = \
+                round(survey_counts["Total Participants"] / total_survey_counts["Total Participants"] * 100, 1)
+
+        for plan in PipelineConfiguration.SURVEY_CODING_PLANS:
+            for cc in plan.coding_configurations:
+                if cc.analysis_file_key is None:
+                    continue
+
+                for code in cc.code_scheme.codes:
+                    if code.control_code == Codes.STOP:
+                        continue
+
+                    code_count = survey_counts[f"{cc.analysis_file_key}:{code.string_value}"]
+                    code_total = total_survey_counts[f"{cc.analysis_file_key}:{code.string_value}"]
+
+                    if code_total == 0:
+                        survey_counts[f"{cc.analysis_file_key}:{code.string_value} %"] = "-"
+                    else:
+                        survey_counts[f"{cc.analysis_file_key}:{code.string_value} %"] = \
+                            round(code_count / code_total * 100, 1)
 
     episodes = OrderedDict()
     for episode_plan in PipelineConfiguration.RQA_CODING_PLANS:
@@ -274,6 +300,17 @@ if __name__ == "__main__":
             if relevant_participant:
                 themes["Total Relevant Participants"]["Total Participants"] += 1
                 update_survey_counts(themes["Total Relevant Participants"], td)
+
+            set_survey_percentages(themes["Total Relevant Participants"], themes["Total Relevant Participants"])
+
+            for cc in episode_plan.coding_configurations:
+                assert cc.coding_mode == CodingModes.MULTIPLE
+                for code in cc.code_scheme.codes:
+                    if code.code_type != CodeTypes.NORMAL:
+                        continue
+
+                    theme = themes[f"{cc.analysis_file_key}{code.string_value}"]
+                    set_survey_percentages(theme, themes["Total Relevant Participants"])
 
     with open(f"{output_dir}/theme_distributions.csv", "w") as f:
         headers = ["Question", "Variable"] + list(make_survey_counts_dict().keys())
