@@ -524,6 +524,15 @@ if __name__ == "__main__":
                 path, f"{pipeline_configuration.drive_upload.analysis_graphs_dir}/graphs",
                 target_folder_is_shared_with_me=True
             )
+
+        log.info("Uploading maps to Drive...")
+        paths_to_upload = glob(f"{output_dir}/maps/*.png")
+        for i, path in enumerate(paths_to_upload):
+            log.info(f"Uploading map {i + 1}/{len(paths_to_upload)}: {path}...")
+            drive_client_wrapper.update_or_create(
+                path, f"{pipeline_configuration.drive_upload.analysis_graphs_dir}/maps",
+                target_folder_is_shared_with_me=True
+            )
     else:
         log.info("Skipping uploading to Google Drive (because the pipeline configuration json does not contain the key "
                  "'DriveUploadPaths')")
