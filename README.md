@@ -2,8 +2,7 @@
 Data pipeline for COVID19.
 
 This pipeline fetches all project data from a Rapid Pro instance and Coda, and processes it to produce data for
-manual labelling and verification in Coda, graphs summarising code distributions, and CSV files suitable for 
-downstream analysis.
+manual labelling and verification in Coda, CSV files suitable for analysis, and some automatic analysis of that data.
 
 ## Pre-requisites
 Before the pipeline can be run, the following tools must be installed:
@@ -21,8 +20,7 @@ A pipeline run consists of the following five steps, executed in sequence:
 2. Fetch all the relevant data from Rapid Pro.
 3. Process the raw data to produce the outputs required for coding and then for analysis.
 4. Upload the new data to Coda for manual verification and coding.
-5. Generate analysis graphs (currently the number of messages/individuals per week and the seasonal distribution of 
-   labels for each code scheme).
+5. Run automated analysis.
 6. Back-up the project data root.
 7. Upload execution logs/archives to long term storage.
 
@@ -136,12 +134,13 @@ where:
 - `data-root` is an absolute path to the directory in which all pipeline data should be stored.
   Downloaded Coda files are saved to `<data-root>/Coded Coda Files/<dataset>.json`.
   
-### 5. Generate Analysis Graphs
-This stage generates graphs of traffic per week, and of the seasonal distribution of codes for each code scheme.
-To use, run the following command from the `run_scripts` directory:
+### 5. Run Automated Analysis
+This stage runs some standard, automated analysis, including generating standard analysis CSVs, charts, and 
+participation maps, and optionally uploads these to Google Drive. To use, run the following command from 
+the `run_scripts` directory:
 
 ```
-$ ./5_generate_analysis_graphs.sh <user> <google-cloud-credentials-file-path> <pipeline-configuration-file-path> <data-root>
+$ ./5_automated_analysis.sh <user> <google-cloud-credentials-file-path> <pipeline-configuration-file-path> <data-root>
 ```
 
 where:
