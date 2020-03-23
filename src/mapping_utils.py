@@ -38,10 +38,14 @@ class MappingUtils(object):
         # from using up all of the colour range, as would happen with a linear scale.
         unique_frequencies = {f for f in frequencies.values() if f != 0}
         number_of_classes = min(5, len(unique_frequencies))
-        geo_data.plot(column="Frequency", cmap=cls.AVF_COLOR_MAP,
-                      scheme="fisher_jenks", k=number_of_classes,
-                      linewidth=0.1, edgecolor="black",
-                      missing_kwds={"edgecolor": "black", "facecolor": "white"})
+        if number_of_classes > 0:
+            geo_data.plot(column="Frequency", cmap=cls.AVF_COLOR_MAP,
+                          scheme="fisher_jenks", k=number_of_classes,
+                          linewidth=0.1, edgecolor="black",
+                          missing_kwds={"edgecolor": "black", "facecolor": "white"})
+        else:
+            # Special-case plotter for when all frequencies are 0, because geopandas crashes otherwise.
+            geo_data.plot(linewidth=0.1, edgecolor="black", facecolor="white")
         plt.axis("off")
 
         # Add a label to each administrative region showing its absolute frequency.
