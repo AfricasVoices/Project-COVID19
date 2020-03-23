@@ -41,10 +41,21 @@
       "CodeType": "Normal",
       "DisplayText": "s01e01",
       "StringValue": "s01e01",
-      "NumericValue": 7,
+      "NumericValue": 4,
       "VisibleInCoda": true,
       "MatchValues": [
         "s01e01"
+      ]
+    },
+    {
+      "CodeID": "code-61f91d7c",
+      "CodeType": "Normal",
+      "DisplayText": "s01e02",
+      "StringValue": "s01e02",
+      "NumericValue": 5,
+      "VisibleInCoda": true,
+      "MatchValues": [
+        "s01e02"
       ]
     },
     {

@@ -299,19 +299,19 @@ if __name__ == "__main__":
             code_to_messages = dict()
             for code in cc.code_scheme.codes:
                 code_to_messages[code.string_value] = []
-                
+
             for msg in messages:
-                if msg[CONSENT_WITHDRAWN_KEY] == Codes.TRUE:
+                if not AnalysisUtils.opt_in(msg, CONSENT_WITHDRAWN_KEY, plan):
                     continue
 
                 for label in msg[cc.coded_field]:
                     code = cc.code_scheme.get_code_with_code_id(label["CodeID"])
                     code_to_messages[code.string_value].append(msg[plan.raw_field])
-                    
-            for code_string_value, messages in code_to_messages.items():
+
+            for code_string_value in code_to_messages:
                 # Sample for at most 100 messages (note: this will give a different sample on each pipeline run)
-                sample_size = min(100, len(messages))
-                sample_messages = random.sample(messages, sample_size)
+                sample_size = min(100, len(code_to_messages[code_string_value]))
+                sample_messages = random.sample(code_to_messages[code_string_value], sample_size)
 
                 for msg in sample_messages:
                     samples.append({
@@ -419,6 +419,11 @@ if __name__ == "__main__":
             for code in cc.code_scheme.codes:
                 if code.code_type == CodeTypes.NORMAL and code.string_value not in {"knowledge", "attitude", "behaviour"}:
                     normal_themes[code.string_value] = episode[f"{cc.analysis_file_key}{code.string_value}"]
+
+        if len(normal_themes) == 0:
+            log.warning(f"Skipping graphing normal themes by gender for {plan.raw_field} because the scheme does "
+                        f"not contain any normal codes")
+            continue
 
         normal_by_gender = []
         for theme, demographic_counts in normal_themes.items():
