@@ -304,7 +304,8 @@ if __name__ == "__main__":
             set_survey_percentages(themes["Total Relevant Participants"], themes["Total Relevant Participants"])
 
             for cc in episode_plan.coding_configurations:
-                assert cc.coding_mode == CodingModes.MULTIPLE
+                assert cc.coding_mode == CodingModes.MULTIPLE, "Only supported coding mode is CodingModes.MULTIPLE"
+
                 for code in cc.code_scheme.codes:
                     if code.code_type != CodeTypes.NORMAL:
                         continue
