@@ -843,7 +843,7 @@
       "DisplayText": "kiambaa",
       "CodeType": "Normal",
       "NumericValue": 121,
-      "StringValue": "kaimbaa",
+      "StringValue": "kiambaa",
       "VisibleInCoda": true,
       "MatchValues": [
         "kiambaa"
@@ -1602,7 +1602,7 @@
       "DisplayText": "lang'ata",
       "CodeType": "Normal",
       "NumericValue": 280,
-      "StringValue": "lang'ata",
+      "StringValue": "langata",
       "VisibleInCoda": true,
       "MatchValues": [
         "lang'ata"
@@ -2856,7 +2856,7 @@
       "DisplayText": "taveta",
       "CodeType": "Normal",
       "NumericValue": 43,
-      "StringValue": "taveta ",
+      "StringValue": "taveta",
       "VisibleInCoda": true,
       "MatchValues": [
         "taveta"
@@ -3098,7 +3098,7 @@
       "DisplayText": "wajir south",
       "CodeType": "Normal",
       "NumericValue": 55,
-      "StringValue": "wajir-south",
+      "StringValue": "wajir_south",
       "VisibleInCoda": true,
       "MatchValues": [
         "wajir south"
