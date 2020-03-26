@@ -53,5 +53,5 @@ class MappingUtils(object):
         # TODO: Modify once per-map configuration needs are better understood by testing on other maps.
         for i, admin_region in geo_data.iterrows():
             plt.annotate(s=frequencies[admin_region[admin_id_column]],
-                         xy=(admin_region.label_x, admin_region.label_y),
+                         xy=(admin_region.ADM1_LX, admin_region.ADM1_LY),
                          ha='center', va="center", fontsize=3.8)
