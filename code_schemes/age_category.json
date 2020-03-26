@@ -192,6 +192,15 @@
       "NumericValue": -100060,
       "StringValue": "participation_incentive",
       "VisibleInCoda": true
+    },
+    {
+      "CodeID": "code-EC-3a704f5b",
+      "CodeType": "Meta",
+      "MetaCode": "exclusion_complaint",
+      "DisplayText": "meta: exclusion complaint",
+      "NumericValue": -100070,
+      "StringValue": "exclusion_complaint",
+      "VisibleInCoda": true
     }
   ]
 }
