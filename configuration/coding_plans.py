@@ -59,29 +59,6 @@ def get_rqa_coding_plans(pipeline_name):
 
 def get_survey_coding_plans(pipeline_name):
     return [
-        CodingPlan(raw_field="location_raw",
-                   time_field="location_time",
-                   coda_filename="location.json",
-                   coding_configurations=[
-                       CodingConfiguration(
-                           coding_mode=CodingModes.SINGLE,
-                           code_scheme=CodeSchemes.KENYA_CONSTITUENCY,
-                           coded_field="constituency_coded",
-                           analysis_file_key="constituency",
-                           fold_strategy=FoldStrategies.assert_label_ids_equal
-                       ),
-                       CodingConfiguration(
-                           coding_mode=CodingModes.SINGLE,
-                           code_scheme=CodeSchemes.KENYA_COUNTY,
-                           coded_field="county_coded",
-                           analysis_file_key="county",
-                           fold_strategy=FoldStrategies.assert_label_ids_equal
-                       ),
-                   ],
-                   code_imputation_function=code_imputation_functions.impute_kenya_location_codes,
-                   ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("location"),
-                   raw_field_fold_strategy=FoldStrategies.assert_equal),
-
         CodingPlan(raw_field="gender_raw",
                    time_field="gender_time",
                    coda_filename="gender.json",
@@ -120,6 +97,29 @@ def get_survey_coding_plans(pipeline_name):
                    code_imputation_function=code_imputation_functions.impute_age_category,
                    ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("age"),
                    raw_field_fold_strategy=FoldStrategies.assert_equal),
+
+        CodingPlan(raw_field="location_raw",
+                   time_field="location_time",
+                   coda_filename="location.json",
+                   coding_configurations=[
+                       CodingConfiguration(
+                           coding_mode=CodingModes.SINGLE,
+                           code_scheme=CodeSchemes.KENYA_COUNTY,
+                           coded_field="county_coded",
+                           analysis_file_key="county",
+                           fold_strategy=FoldStrategies.assert_label_ids_equal
+                       ),
+                       CodingConfiguration(
+                           coding_mode=CodingModes.SINGLE,
+                           code_scheme=CodeSchemes.KENYA_CONSTITUENCY,
+                           coded_field="constituency_coded",
+                           analysis_file_key="constituency",
+                           fold_strategy=FoldStrategies.assert_label_ids_equal
+                       )
+                   ],
+                   code_imputation_function=code_imputation_functions.impute_kenya_location_codes,
+                   ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("location"),
+                   raw_field_fold_strategy=FoldStrategies.assert_equal)
     ]
 
 
