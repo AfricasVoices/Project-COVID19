@@ -52,6 +52,14 @@ class MappingUtils(object):
         # The font size and label position names are currently hard-coded for Kenyan counties.
         # TODO: Modify once per-map configuration needs are better understood by testing on other maps.
         for i, admin_region in geo_data.iterrows():
+            if pandas.isna(admin_region.ADM1_CALLX):
+                xy = (admin_region.ADM1_LX, admin_region.ADM1_LY)
+                xytext = None
+            else:
+                xy = (admin_region.ADM1_CALLX, admin_region.ADM1_CALLY)
+                xytext = (admin_region.ADM1_LX, admin_region.ADM1_LY)
+
             plt.annotate(s=frequencies[admin_region[admin_id_column]],
-                         xy=(admin_region.ADM1_LX, admin_region.ADM1_LY),
-                         ha='center', va="center", fontsize=3.8)
+                         xy=xy, xytext=xytext,
+                         arrowprops=dict(facecolor="black", arrowstyle="-", linewidth=0.1, shrinkA=0, shrinkB=0),
+                         ha="center", va="center", fontsize=3.8)
