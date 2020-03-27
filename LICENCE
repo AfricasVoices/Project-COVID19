@@ -30,3 +30,6 @@ with their source and licence, are:
 - `geojson/kenya_counties.geojson`: Adapted from data produced by OCHA ROSEA.
 Retrieved from https://data.humdata.org/dataset/ken-administrative-boundaries
 March 2020. Licence "Other: humanitarian use only"
+- `geojson/kenya_constituencies.geojson`: Adapted from data produced by OCHA ROSEA.
+Retrieved from https://data.humdata.org/dataset/ken-administrative-boundaries
+March 2020. Licence "Other: humanitarian use only"

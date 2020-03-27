@@ -7,7 +7,7 @@ class MappingUtils(object):
     AVF_COLOR_MAP = LinearSegmentedColormap.from_list("avf_color_map", ["#e6cfd1", "#993e46"])
 
     @classmethod
-    def plot_frequency_map(cls, geo_data, admin_id_column, frequencies):
+    def plot_frequency_map(cls, geo_data, admin_id_column, frequencies, label_position_columns=None):
         """
         Plots a map of the given geo data with a choropleth showing the frequency of responses in each administrative
         region.
@@ -20,6 +20,13 @@ class MappingUtils(object):
         :type admin_id_column: str
         :param frequencies: Dictionary of admin_id -> frequency.
         :type frequencies: dict of str -> int
+        :param label_position_columns: A tuple specifying which columns in the `geo_data` contain the label
+                                       positions to draw each frequency label at, or None.
+                                       The format is (X Position Column, Y Position Column). Positions should be in
+                                       the same coordinate system as the geometry, and represent the vertical and
+                                       horizontal center position of the drawn label.
+                                       If None, no frequency labels are drawn.
+        :type label_position_columns: (str, str) | None
         """
         # Convert the raw frequencies dict to a pandas DataFrame, then join it with the geo data frame on the admin_ids.
         # Frequencies that are 0 are set to None ('missing'), to prevent the color-mapping algorithm including
@@ -49,9 +56,10 @@ class MappingUtils(object):
         plt.axis("off")
 
         # Add a label to each administrative region showing its absolute frequency.
-        # The font size and label position names are currently hard-coded for Kenyan counties.
+        # The font size is currently hard-coded for Kenyan counties.
         # TODO: Modify once per-map configuration needs are better understood by testing on other maps.
-        for i, admin_region in geo_data.iterrows():
-            plt.annotate(s=frequencies[admin_region[admin_id_column]],
-                         xy=(admin_region.ADM1_LX, admin_region.ADM1_LY),
-                         ha='center', va="center", fontsize=3.8)
+        if label_position_columns is not None:
+            for i, admin_region in geo_data.iterrows():
+                plt.annotate(s=frequencies[admin_region[admin_id_column]],
+                             xy=(admin_region[label_position_columns[0]], admin_region[label_position_columns[1]]),
+                             ha='center', va="center", fontsize=3.8)

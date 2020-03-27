@@ -380,7 +380,7 @@ if __name__ == "__main__":
         if code.code_type == CodeTypes.NORMAL:
             county_frequencies[code.string_value] = demographic_distributions["county"][code.string_value]
 
-    MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", county_frequencies)
+    MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", county_frequencies, label_position_columns=("ADM1_LX", "ADM1_LY"))
     plt.savefig(f"{output_dir}/maps/county_total_participants.png", dpi=1200, bbox_inches="tight")
     plt.close()
 
@@ -394,7 +394,8 @@ if __name__ == "__main__":
                 if county_code.code_type == CodeTypes.NORMAL:
                     rqa_total_county_frequencies[county_code.string_value] = \
                         episode["Total Relevant Participants"][f"county:{county_code.string_value}"]
-            MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", rqa_total_county_frequencies)
+            MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", rqa_total_county_frequencies,
+                                            label_position_columns=("ADM1_LX", "ADM1_LY"))
             plt.savefig(f"{output_dir}/maps/county_{cc.analysis_file_key}_1_total_relevant.png",
                         dpi=1200, bbox_inches="tight")
             plt.close()
@@ -415,8 +416,60 @@ if __name__ == "__main__":
                         theme_county_frequencies[county_code.string_value] = \
                             demographic_counts[f"county:{county_code.string_value}"]
 
-                MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", theme_county_frequencies)
+                MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", theme_county_frequencies,
+                                                label_position_columns=("ADM1_LX", "ADM1_LY"))
                 plt.savefig(f"{output_dir}/maps/county_{cc.analysis_file_key}_{map_index}_{code.string_value}.png",
+                            dpi=1200, bbox_inches="tight")
+                plt.close()
+
+                map_index += 1
+
+    log.info("Loading the Kenya constituency geojson...")
+    constituencies_map = geopandas.read_file("geojson/kenya_constituencies.geojson")
+
+    log.info("Generating a map of per-constituency participation for the season")
+    constituency_frequencies = dict()
+    for code in CodeSchemes.KENYA_CONSTITUENCY.codes:
+        if code.code_type == CodeTypes.NORMAL:
+            constituency_frequencies[code.string_value] = demographic_distributions["constituency"][code.string_value]
+
+    MappingUtils.plot_frequency_map(constituencies_map, "ADM2_AVF", constituency_frequencies)
+    plt.savefig(f"{output_dir}/maps/constituency_total_participants.png", dpi=1200, bbox_inches="tight")
+    plt.close()
+
+    for plan in PipelineConfiguration.RQA_CODING_PLANS:
+        episode = episodes[plan.raw_field]
+
+        for cc in plan.coding_configurations:
+            # Plot a map of the total relevant participants for this coding configuration.
+            rqa_total_constituency_frequencies = dict()
+            for constituency_code in CodeSchemes.KENYA_CONSTITUENCY.codes:
+                if constituency_code.code_type == CodeTypes.NORMAL:
+                    rqa_total_constituency_frequencies[constituency_code.string_value] = \
+                        episode["Total Relevant Participants"][f"constituency:{constituency_code.string_value}"]
+            MappingUtils.plot_frequency_map(constituencies_map, "ADM2_AVF", rqa_total_constituency_frequencies)
+            plt.savefig(f"{output_dir}/maps/constituency_{cc.analysis_file_key}_1_total_relevant.png",
+                        dpi=1200, bbox_inches="tight")
+            plt.close()
+
+            # Plot maps of each of the normal themes for this coding configuration.
+            map_index = 2  # (index 1 was used in the total relevant map's filename).
+            for code in cc.code_scheme.codes:
+                if code.code_type != CodeTypes.NORMAL:
+                    continue
+
+                theme = f"{cc.analysis_file_key}{code.string_value}"
+                log.info(f"Generating a map of per-constituency participation for {theme}...")
+                demographic_counts = episode[theme]
+
+                theme_constituency_frequencies = dict()
+                for constituency_code in CodeSchemes.KENYA_CONSTITUENCY.codes:
+                    if constituency_code.code_type == CodeTypes.NORMAL:
+                        theme_constituency_frequencies[constituency_code.string_value] = \
+                            demographic_counts[f"constituency:{constituency_code.string_value}"]
+
+                MappingUtils.plot_frequency_map(constituencies_map, "ADM2_AVF", theme_constituency_frequencies)
+                plt.savefig(f"{output_dir}/maps/constituency_{cc.analysis_file_key}_{map_index}_{code.string_value}.png",
                             dpi=1200, bbox_inches="tight")
                 plt.close()
 
