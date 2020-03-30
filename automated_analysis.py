@@ -380,7 +380,9 @@ if __name__ == "__main__":
         if code.code_type == CodeTypes.NORMAL:
             county_frequencies[code.string_value] = demographic_distributions["county"][code.string_value]
 
-    MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", county_frequencies, label_position_columns=("ADM1_LX", "ADM1_LY"))
+    MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", county_frequencies,
+                                    label_position_columns=("ADM1_LX", "ADM1_LY"),
+                                    callout_position_columns=("ADM1_CALLX", "ADM1_CALLY"))
     plt.savefig(f"{output_dir}/maps/county_total_participants.png", dpi=1200, bbox_inches="tight")
     plt.close()
 
@@ -395,7 +397,8 @@ if __name__ == "__main__":
                     rqa_total_county_frequencies[county_code.string_value] = \
                         episode["Total Relevant Participants"][f"county:{county_code.string_value}"]
             MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", rqa_total_county_frequencies,
-                                            label_position_columns=("ADM1_LX", "ADM1_LY"))
+                                            label_position_columns=("ADM1_LX", "ADM1_LY"),
+                                            callout_position_columns=("ADM1_CALLX", "ADM1_CALLY"))
             plt.savefig(f"{output_dir}/maps/county_{cc.analysis_file_key}_1_total_relevant.png",
                         dpi=1200, bbox_inches="tight")
             plt.close()
@@ -417,7 +420,8 @@ if __name__ == "__main__":
                             demographic_counts[f"county:{county_code.string_value}"]
 
                 MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", theme_county_frequencies,
-                                                label_position_columns=("ADM1_LX", "ADM1_LY"))
+                                                label_position_columns=("ADM1_LX", "ADM1_LY"),
+                                                callout_position_columns=("ADM1_CALLX", "ADM1_CALLY"))
                 plt.savefig(f"{output_dir}/maps/county_{cc.analysis_file_key}_{map_index}_{code.string_value}.png",
                             dpi=1200, bbox_inches="tight")
                 plt.close()
