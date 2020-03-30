@@ -83,4 +83,4 @@ class MappingUtils(object):
                 plt.annotate(s=frequencies[admin_region[admin_id_column]],
                              xy=xy, xytext=xytext,
                              arrowprops=dict(facecolor="black", arrowstyle="-", linewidth=0.1, shrinkA=0, shrinkB=0),
-                             ha='center', va="center", fontsize=3.8)
+                             ha="center", va="center", fontsize=3.8)
