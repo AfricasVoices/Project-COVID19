@@ -1,10 +1,12 @@
 import matplotlib.pyplot as plt
 import pandas
+import numpy as np
+from mapclassify import FisherJenks
 from matplotlib.colors import LinearSegmentedColormap
 
 
 class MappingUtils(object):
-    AVF_COLOR_MAP = LinearSegmentedColormap.from_list("avf_color_map", ["#e6cfd1", "#993e46"])
+    AVF_COLOR_MAP = LinearSegmentedColormap.from_list("avf_color_map", ["#ffffff", "#993e46"])
     WATER_COLOR = "#edf5ff"
 
     @classmethod
@@ -41,32 +43,24 @@ class MappingUtils(object):
         :param ax: Axes on which to draw the plot. If None, draws to a new figure.
         :type ax: matplotlib.pyplot.Artist | None
         """
-        # Convert the raw frequencies dict to a pandas DataFrame, then join it with the geo data frame on the admin_ids.
-        # Frequencies that are 0 are set to None ('missing'), to prevent the color-mapping algorithm including
-        # low responses (e.g. just 1 or 2) in the same class (color) as regions with no response.
-        map_frequencies = []
-        for k, v in frequencies.items():
-            map_frequencies.append({
-                admin_id_column: k,
-                "Frequency": v if v != 0 else None
-            })
-        geo_data = geo_data.merge(pandas.DataFrame(map_frequencies), on=admin_id_column)
-
-        # Plot the choropleth map.
-        # Frequencies are classed using the Fisher-Jenks method, a standard GIS algorithm for choropleth classification.
+        # Class the frequencies using the Fisher-Jenks method, a standard GIS algorithm for choropleth classification.
         # Using this method prevents a region with a vastly higher frequency than the others (e.g. a capital city)
         # from using up all of the colour range, as would happen with a linear scale.
-        unique_frequencies = {f for f in frequencies.values() if f != 0}
-        number_of_classes = min(5, len(unique_frequencies))
-        if number_of_classes > 0:
-            geo_data.plot(ax=ax,
-                          column="Frequency", cmap=cls.AVF_COLOR_MAP,
-                          scheme="fisher_jenks", k=number_of_classes,
-                          linewidth=0.1, edgecolor="black",
-                          missing_kwds={"edgecolor": "black", "facecolor": "white"})
-        else:
-            # Special-case plotter for when all frequencies are 0, because geopandas crashes otherwise.
-            geo_data.plot(ax=plt.gca(), linewidth=0.1, edgecolor="black", facecolor="white")
+        # Ignores zeros when classing, so that 0s are not included in the same class as other lower numbers, then adds
+        # the 0 back in when converting from classes to bin edges.
+        frequencies_to_class = [f for f in frequencies.values() if f != 0]
+        number_of_classes = min(5, len(set(frequencies_to_class)))
+        bin_edges = [0] + list(FisherJenks(np.array(frequencies_to_class), k=number_of_classes).bins)
+
+        # Get the color for each region by searching for the appropriate bin for each frequency.
+        colors = []
+        for i, admin_region in geo_data.iterrows():
+            frequency = frequencies[admin_region[admin_id_column]]
+            bin_id = [i for i, z in enumerate(bin_edges) if z >= frequency][0]  # Index of first bin edge >= frequency
+            colors.append(cls.AVF_COLOR_MAP(float(bin_id) / number_of_classes))
+
+        # Plot the choropleth map.
+        geo_data.plot(ax=ax, color=colors, linewidth=0.1, edgecolor="black")
         plt.axis("off")
 
         # Add a label to each administrative region showing its absolute frequency.
