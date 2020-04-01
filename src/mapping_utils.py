@@ -56,7 +56,7 @@ class MappingUtils(object):
         colors = []
         for i, admin_region in geo_data.iterrows():
             frequency = frequencies[admin_region[admin_id_column]]
-            bin_id = [i for i, z in enumerate(bin_edges) if z >= frequency][0]  # Index of first bin edge >= frequency
+            bin_id = [i for i, b in enumerate(bin_edges) if b >= frequency][0]  # Index of first bin edge >= frequency
             colors.append(cls.AVF_COLOR_MAP(float(bin_id) / number_of_classes))
 
         # Plot the choropleth map.
