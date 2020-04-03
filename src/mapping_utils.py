@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
-import pandas
 import numpy as np
+import pandas
 from mapclassify import FisherJenks
 from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.patches import Patch
 
 
 class MappingUtils(object):
@@ -50,18 +51,35 @@ class MappingUtils(object):
         # the 0 back in when converting from classes to bin edges.
         frequencies_to_class = [f for f in frequencies.values() if f != 0]
         number_of_classes = min(5, len(set(frequencies_to_class)))
-        bin_edges = [0] + list(FisherJenks(np.array(frequencies_to_class), k=number_of_classes).bins)
+        bin_edges = [0]
+        if number_of_classes > 0:
+            bin_edges.extend(FisherJenks(np.array(frequencies_to_class), k=number_of_classes).bins)
 
         # Get the color for each region by searching for the appropriate bin for each frequency.
         colors = []
         for i, admin_region in geo_data.iterrows():
             frequency = frequencies[admin_region[admin_id_column]]
             bin_id = [i for i, b in enumerate(bin_edges) if b >= frequency][0]  # Index of first bin edge >= frequency
-            colors.append(cls.AVF_COLOR_MAP(float(bin_id) / number_of_classes))
+            colors.append(cls.AVF_COLOR_MAP(0 if bin_id == 0 else float(bin_id) / number_of_classes))
 
         # Plot the choropleth map.
-        geo_data.plot(ax=ax, color=colors, linewidth=0.1, edgecolor="black")
+        ax = geo_data.plot(ax=ax, color=colors, linewidth=0.1, edgecolor="black")
         plt.axis("off")
+
+        # Add the choropleth legend.
+        legend_elements = [
+            Patch(label="0", facecolor=cls.AVF_COLOR_MAP(0), linewidth=0.1, edgecolor="black")
+        ]
+        for bin_id in range(1, len(bin_edges)):
+            range_min = bin_edges[bin_id - 1] + 1
+            range_max = bin_edges[bin_id]
+            legend_elements.append(Patch(
+                label=range_min if range_min == range_max else f"{range_min} - {range_max}",
+                facecolor=cls.AVF_COLOR_MAP(float(bin_id) / number_of_classes),
+                linewidth=0.1, edgecolor="black"
+            ))
+        ax.legend(handles=legend_elements, title="Participants", title_fontsize=6, loc="lower right",
+                  frameon=False, handlelength=1.8, handleheight=1.8, labelspacing=0, prop=dict(size=5.5))
 
         # Add a label to each administrative region showing its absolute frequency.
         # The font size is currently hard-coded for Kenyan counties.
