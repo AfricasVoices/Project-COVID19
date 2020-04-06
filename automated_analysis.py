@@ -374,17 +374,24 @@ if __name__ == "__main__":
     log.info("Loading the Kenya county geojson...")
     counties_map = geopandas.read_file("geojson/kenya_counties.geojson")
 
+    log.info("Loading the Kenya lakes geojson...")
+    lakes_map = geopandas.read_file("geojson/kenya_lakes.geojson")
+    # Keep only Kenya's great lakes
+    lakes_map = lakes_map[lakes_map.LAKE_AVF.isin({"lake_turkana", "lake_victoria"})]
+
     log.info("Generating a map of per-county participation for the season")
     county_frequencies = dict()
     for code in CodeSchemes.KENYA_COUNTY.codes:
         if code.code_type == CodeTypes.NORMAL:
             county_frequencies[code.string_value] = demographic_distributions["county"][code.string_value]
 
-    MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", county_frequencies,
+    fig, ax = plt.subplots()
+    MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", county_frequencies, ax=ax,
                                     label_position_columns=("ADM1_LX", "ADM1_LY"),
                                     callout_position_columns=("ADM1_CALLX", "ADM1_CALLY"))
-    plt.savefig(f"{output_dir}/maps/county_total_participants.png", dpi=1200, bbox_inches="tight")
-    plt.close()
+    MappingUtils.plot_water_bodies(lakes_map, ax=ax)
+    fig.savefig(f"{output_dir}/maps/county_total_participants.png", dpi=1200, bbox_inches="tight")
+    plt.close(fig)
 
     for plan in PipelineConfiguration.RQA_CODING_PLANS:
         episode = episodes[plan.raw_field]
@@ -396,12 +403,15 @@ if __name__ == "__main__":
                 if county_code.code_type == CodeTypes.NORMAL:
                     rqa_total_county_frequencies[county_code.string_value] = \
                         episode["Total Relevant Participants"][f"county:{county_code.string_value}"]
-            MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", rqa_total_county_frequencies,
+
+            fig, ax = plt.subplots()
+            MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", rqa_total_county_frequencies, ax=ax,
                                             label_position_columns=("ADM1_LX", "ADM1_LY"),
                                             callout_position_columns=("ADM1_CALLX", "ADM1_CALLY"))
-            plt.savefig(f"{output_dir}/maps/county_{cc.analysis_file_key}_1_total_relevant.png",
+            MappingUtils.plot_water_bodies(lakes_map, ax=ax)
+            fig.savefig(f"{output_dir}/maps/county_{cc.analysis_file_key}_1_total_relevant.png",
                         dpi=1200, bbox_inches="tight")
-            plt.close()
+            plt.close(fig)
 
             # Plot maps of each of the normal themes for this coding configuration.
             map_index = 2  # (index 1 was used in the total relevant map's filename).
@@ -419,12 +429,14 @@ if __name__ == "__main__":
                         theme_county_frequencies[county_code.string_value] = \
                             demographic_counts[f"county:{county_code.string_value}"]
 
-                MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", theme_county_frequencies,
+                fig, ax = plt.subplots()
+                MappingUtils.plot_frequency_map(counties_map, "ADM1_AVF", theme_county_frequencies, ax=ax,
                                                 label_position_columns=("ADM1_LX", "ADM1_LY"),
                                                 callout_position_columns=("ADM1_CALLX", "ADM1_CALLY"))
-                plt.savefig(f"{output_dir}/maps/county_{cc.analysis_file_key}_{map_index}_{code.string_value}.png",
+                MappingUtils.plot_water_bodies(lakes_map, ax=ax)
+                fig.savefig(f"{output_dir}/maps/county_{cc.analysis_file_key}_{map_index}_{code.string_value}.png",
                             dpi=1200, bbox_inches="tight")
-                plt.close()
+                plt.close(fig)
 
                 map_index += 1
 

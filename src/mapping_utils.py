@@ -5,15 +5,17 @@ from matplotlib.colors import LinearSegmentedColormap
 
 class MappingUtils(object):
     AVF_COLOR_MAP = LinearSegmentedColormap.from_list("avf_color_map", ["#e6cfd1", "#993e46"])
+    WATER_COLOR = "#edf5ff"
 
     @classmethod
     def plot_frequency_map(cls, geo_data, admin_id_column, frequencies, label_position_columns=None,
-                           callout_position_columns=None):
+                           callout_position_columns=None, ax=None):
         """
         Plots a map of the given geo data with a choropleth showing the frequency of responses in each administrative
         region.
 
-        The map is plotted to the active matplotlib figure. Use matplotlib.pyplot to access and manipulate the result.
+        The map is plotted to the specified axes or to the active matplotlib figure.
+        Use matplotlib.pyplot to access and manipulate the result.
 
         :param geo_data: GeoData to plot.
         :type geo_data: geopandas.GeoDataFrame
@@ -36,6 +38,8 @@ class MappingUtils(object):
                                          for this feature.
                                          If None, no callout lines are drawn.
         :type callout_position_columns: (str, str) | None
+        :param ax: Axes on which to draw the plot. If None, draws to a new figure.
+        :type ax: matplotlib.pyplot.Artist | None
         """
         # Convert the raw frequencies dict to a pandas DataFrame, then join it with the geo data frame on the admin_ids.
         # Frequencies that are 0 are set to None ('missing'), to prevent the color-mapping algorithm including
@@ -55,13 +59,14 @@ class MappingUtils(object):
         unique_frequencies = {f for f in frequencies.values() if f != 0}
         number_of_classes = min(5, len(unique_frequencies))
         if number_of_classes > 0:
-            geo_data.plot(column="Frequency", cmap=cls.AVF_COLOR_MAP,
+            geo_data.plot(ax=ax,
+                          column="Frequency", cmap=cls.AVF_COLOR_MAP,
                           scheme="fisher_jenks", k=number_of_classes,
                           linewidth=0.1, edgecolor="black",
                           missing_kwds={"edgecolor": "black", "facecolor": "white"})
         else:
             # Special-case plotter for when all frequencies are 0, because geopandas crashes otherwise.
-            geo_data.plot(linewidth=0.1, edgecolor="black", facecolor="white")
+            geo_data.plot(ax=plt.gca(), linewidth=0.1, edgecolor="black", facecolor="white")
         plt.axis("off")
 
         # Add a label to each administrative region showing its absolute frequency.
@@ -84,3 +89,18 @@ class MappingUtils(object):
                              xy=xy, xytext=xytext,
                              arrowprops=dict(facecolor="black", arrowstyle="-", linewidth=0.1, shrinkA=0, shrinkB=0),
                              ha="center", va="center", fontsize=3.8)
+
+    @classmethod
+    def plot_water_bodies(cls, geo_data, ax=None):
+        """
+        Plots a map of the given `geo_data`, shaded with color `MappingUtils.WATER_COLOR`.
+
+        The map is plotted to the specified axes or to the active matplotlib figure.
+        Use matplotlib.pyplot to access and manipulate the result.
+
+        :param geo_data: GeoData to plot.
+        :type geo_data: geopandas.GeoDataFrame
+        :param ax: Axes on which to draw the plot. If None, draws to a new figure.
+        :type ax: matplotlib.pyplot.Artist | None
+        """
+        geo_data.plot(ax=ax, linewidth=0.1, edgecolor="black", facecolor=cls.WATER_COLOR)
