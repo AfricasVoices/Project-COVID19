@@ -31,6 +31,10 @@ Those files, along with their source and licence, are:
 Retrieved from https://data.humdata.org/dataset/ken-administrative-boundaries
 March 2020. Licence "Other: humanitarian use only"
 
+- `geojson/kenya_constituencies.geojson`: Adapted from data produced by OCHA ROSEA.
+Retrieved from https://data.humdata.org/dataset/ken-administrative-boundaries
+March 2020. Licence "Other: humanitarian use only"
+
 - `geojson/kenya_lakes.geojson`: Adapted from data produced by OCHA ROSEA.
 Retrieved from https://data.humdata.org/dataset/kenya-water-bodies
 March 2020. Licence:
