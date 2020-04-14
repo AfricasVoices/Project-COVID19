@@ -35,7 +35,7 @@ def get_rqa_coding_plans(pipeline_name):
                            fold_strategy=lambda x, y: FoldStrategies.list_of_labels(CodeSchemes.S01E01, x, y)
                        )
                    ],
-                   ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("s01e01"),
+                   ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("COVID19 s01e01"),
                    raw_field_fold_strategy=FoldStrategies.concatenate),
 
         CodingPlan(raw_field="rqa_s01e02_raw",
@@ -52,7 +52,7 @@ def get_rqa_coding_plans(pipeline_name):
                            fold_strategy=lambda x, y: FoldStrategies.list_of_labels(CodeSchemes.S01E02, x, y)
                        )
                    ],
-                   ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("s01e02"),
+                   ws_code=CodeSchemes.WS_CORRECT_DATASET.get_code_with_match_value("COVID19 s01e02"),
                    raw_field_fold_strategy=FoldStrategies.concatenate),
     ]
 
