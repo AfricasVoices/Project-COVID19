@@ -39,23 +39,45 @@
     {
       "CodeID": "code-9bd0f2b1",
       "CodeType": "Normal",
-      "DisplayText": "s01e01",
-      "StringValue": "s01e01",
+      "DisplayText": "COVID19 s01e01",
+      "StringValue": "covid19_s01e01",
       "NumericValue": 4,
       "VisibleInCoda": true,
       "MatchValues": [
-        "s01e01"
+        "COVID19 s01e01"
       ]
     },
     {
       "CodeID": "code-61f91d7c",
       "CodeType": "Normal",
-      "DisplayText": "s01e02",
-      "StringValue": "s01e02",
+      "DisplayText": "COVID19 s01e02",
+      "StringValue": "covid19_s01e02",
       "NumericValue": 5,
       "VisibleInCoda": true,
       "MatchValues": [
-        "s01e02"
+        "COVID19 s01e02"
+      ]
+    },
+    {
+      "CodeID": "code-4dc81f3b",
+      "CodeType": "Normal",
+      "DisplayText": "COVID19-KE-Urban s01e01",
+      "StringValue": "covid19_ke_urban_s01e01",
+      "NumericValue": 6,
+      "VisibleInCoda": true,
+      "MatchValues": [
+        "COVID19-KE-Urban s01e01"
+      ]
+    },
+    {
+      "CodeID": "code-44371d98",
+      "CodeType": "Normal",
+      "DisplayText": "COVID19-KE-Urban s01e02",
+      "StringValue": "covid19_ke_urban_s01e02",
+      "NumericValue": 7,
+      "VisibleInCoda": true,
+      "MatchValues": [
+        "COVID19-KE-Urban s01e02"
       ]
     },
     {
