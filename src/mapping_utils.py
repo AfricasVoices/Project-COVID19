@@ -42,8 +42,11 @@ class MappingUtils(object):
                                          for this feature.
                                          If None, no callout lines are drawn.
         :type callout_position_columns: (str, str) | None
+        :param show_legend: Whether to draw a legend for the choropleth. The legend will be drawn to the bottom-right
+                            corner.
+        :type show_legend: bool
         :param ax: Axes on which to draw the plot. If None, draws to a new figure.
-        :type ax: matplotlib.pyplot.Artist | None
+        :type ax: matplotlib.pyplot.Axes | None
         """
         # Class the frequencies using the Fisher-Jenks method, a standard GIS algorithm for choropleth classification.
         # Using this method prevents a region with a vastly higher frequency than the others (e.g. a capital city)
@@ -106,6 +109,25 @@ class MappingUtils(object):
 
     @classmethod
     def plot_inset_map(cls, geo_data, admin_id_column, frequencies, inset_region, inset_position, zoom, ax):
+        """
+        Plots a map of the given geo data with a choropleth showing the frequency of responses in each administrative
+        region as an inset on another axes.
+
+        :param geo_data: GeoData to plot.
+        :type geo_data: geopandas.GeoDataFrame
+        :param admin_id_column: Column in `geo_data` of the administrative region ids.
+        :type admin_id_column: str
+        :param frequencies: Dictionary of admin_id -> frequency.
+        :type frequencies: dict of str -> int
+        :param inset_region: Map co-ordinates to plot in the inset map, in the form (x1, y1, x2, y2).
+        :type inset_region: (float, float, float, float)
+        :param inset_position: Map co-ordinates to center the inset on, in the form (x, y).
+        :type inset_position: (float, float)
+        :param zoom: Zoom factor.
+        :type zoom: float
+        :param ax: Axes on which to draw the plot. If None, draws to a new figure.
+        :type ax: matplotlib.pyplot.Axes
+        """
         inset_ax = zoomed_inset_axes(ax, zoom=zoom, loc="center", bbox_to_anchor=inset_position,
                                      bbox_transform=ax.transData)
         plt.setp(inset_ax.spines.values(), linewidth=0.2, color="black")
