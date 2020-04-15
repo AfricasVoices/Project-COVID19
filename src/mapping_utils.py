@@ -4,6 +4,7 @@ import pandas
 from mapclassify import FisherJenks
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.patches import Patch
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
 
 
 class MappingUtils(object):
@@ -12,7 +13,7 @@ class MappingUtils(object):
 
     @classmethod
     def plot_frequency_map(cls, geo_data, admin_id_column, frequencies, label_position_columns=None,
-                           callout_position_columns=None, ax=None):
+                           callout_position_columns=None, show_legend=True, ax=None):
         """
         Plots a map of the given geo data with a choropleth showing the frequency of responses in each administrative
         region.
@@ -64,22 +65,23 @@ class MappingUtils(object):
 
         # Plot the choropleth map.
         ax = geo_data.plot(ax=ax, color=colors, linewidth=0.1, edgecolor="black")
-        plt.axis("off")
+        ax.axis("off")
 
         # Add the choropleth legend.
-        legend_elements = [
-            Patch(label="0", facecolor=cls.AVF_COLOR_MAP(0), linewidth=0.1, edgecolor="black")
-        ]
-        for bin_id in range(1, len(bin_edges)):
-            range_min = bin_edges[bin_id - 1] + 1
-            range_max = bin_edges[bin_id]
-            legend_elements.append(Patch(
-                label=range_min if range_min == range_max else f"{range_min} - {range_max}",
-                facecolor=cls.AVF_COLOR_MAP(float(bin_id) / number_of_classes),
-                linewidth=0.1, edgecolor="black"
-            ))
-        ax.legend(handles=legend_elements, title="Participants", title_fontsize=6, loc="lower right",
-                  frameon=False, handlelength=1.8, handleheight=1.8, labelspacing=0, prop=dict(size=5.5))
+        if show_legend:
+            legend_elements = [
+                Patch(label="0", facecolor=cls.AVF_COLOR_MAP(0), linewidth=0.1, edgecolor="black")
+            ]
+            for bin_id in range(1, len(bin_edges)):
+                range_min = bin_edges[bin_id - 1] + 1
+                range_max = bin_edges[bin_id]
+                legend_elements.append(Patch(
+                    label=range_min if range_min == range_max else f"{range_min} - {range_max}",
+                    facecolor=cls.AVF_COLOR_MAP(float(bin_id) / number_of_classes),
+                    linewidth=0.1, edgecolor="black"
+                ))
+            ax.legend(handles=legend_elements, title="Participants", title_fontsize=6, loc="lower right",
+                      frameon=False, handlelength=1.8, handleheight=1.8, labelspacing=0, prop=dict(size=5.5))
 
         # Add a label to each administrative region showing its absolute frequency.
         # The font size is currently hard-coded for Kenyan counties.
@@ -97,10 +99,28 @@ class MappingUtils(object):
                     xy = (admin_region[callout_position_columns[0]], admin_region[callout_position_columns[1]])
                     xytext = (admin_region[label_position_columns[0]], admin_region[label_position_columns[1]])
 
-                plt.annotate(s=frequencies[admin_region[admin_id_column]],
-                             xy=xy, xytext=xytext,
-                             arrowprops=dict(facecolor="black", arrowstyle="-", linewidth=0.1, shrinkA=0, shrinkB=0),
-                             ha="center", va="center", fontsize=3.8)
+                ax.annotate(s=frequencies[admin_region[admin_id_column]],
+                            xy=xy, xytext=xytext,
+                            arrowprops=dict(facecolor="black", arrowstyle="-", linewidth=0.1, shrinkA=0, shrinkB=0),
+                            ha="center", va="center", fontsize=3.8)
+
+    @classmethod
+    def plot_inset_map(cls, geo_data, admin_id_column, frequencies, inset_region, inset_position, zoom, ax):
+        inset_ax = zoomed_inset_axes(ax, zoom=zoom, loc="center", bbox_to_anchor=inset_position,
+                                     bbox_transform=ax.transData)
+        plt.setp(inset_ax.spines.values(), linewidth=0.2, color="black")
+        inset_ax.set_xlim(inset_region[0], inset_region[2])
+        inset_ax.set_ylim(inset_region[1], inset_region[3])
+        inset_ax.set_xticklabels('')
+        inset_ax.set_yticklabels('')
+        rectangle, connectors = ax.indicate_inset_zoom(inset_ax, edgecolor="black", alpha=1, linewidth=0.2)
+        for c in connectors:
+            c.set_visible(False)
+        inset_ax.xaxis.set_visible(False)
+        inset_ax.yaxis.set_visible(False)
+
+        cls.plot_frequency_map(geo_data, admin_id_column, frequencies, ax=inset_ax, show_legend=False)
+        inset_ax.axis("on")
 
     @classmethod
     def plot_water_bodies(cls, geo_data, ax=None):
