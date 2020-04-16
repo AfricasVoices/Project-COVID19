@@ -108,7 +108,7 @@ class MappingUtils(object):
                             ha="center", va="center", fontsize=3.8)
 
     @classmethod
-    def plot_inset_map(cls, geo_data, admin_id_column, frequencies, inset_region, inset_position, zoom, ax):
+    def plot_inset_frequency_map(cls, geo_data, admin_id_column, frequencies, inset_region, inset_position, zoom, ax):
         """
         Plots a map of the given geo data with a choropleth showing the frequency of responses in each administrative
         region as an inset on another axes.
