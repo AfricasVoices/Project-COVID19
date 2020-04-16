@@ -451,6 +451,9 @@ if __name__ == "__main__":
 
     fig, ax = plt.subplots()
     MappingUtils.plot_frequency_map(constituencies_map, "ADM2_AVF", constituency_frequencies, ax=ax)
+    MappingUtils.plot_inset_frequency_map(
+        constituencies_map, "ADM2_AVF", constituency_frequencies,
+        inset_region=(36.62, -1.46, 37.12, -1.09), zoom=3, inset_position=(35.60, -2.95), ax=ax)
     MappingUtils.plot_water_bodies(lakes_map, ax=ax)
     plt.savefig(f"{output_dir}/maps/constituency_total_participants.png", dpi=1200, bbox_inches="tight")
     plt.close(fig)
@@ -468,6 +471,9 @@ if __name__ == "__main__":
 
             fig, ax = plt.subplots()
             MappingUtils.plot_frequency_map(constituencies_map, "ADM2_AVF", rqa_total_constituency_frequencies, ax=ax)
+            MappingUtils.plot_inset_frequency_map(
+                constituencies_map, "ADM2_AVF", rqa_total_constituency_frequencies,
+                inset_region=(36.62, -1.46, 37.12, -1.09), zoom=3, inset_position=(35.60, -2.95), ax=ax)
             MappingUtils.plot_water_bodies(lakes_map, ax=ax)
             plt.savefig(f"{output_dir}/maps/constituency_{cc.analysis_file_key}_1_total_relevant.png",
                         dpi=1200, bbox_inches="tight")
@@ -491,6 +497,9 @@ if __name__ == "__main__":
 
                 fig, ax = plt.subplots()
                 MappingUtils.plot_frequency_map(constituencies_map, "ADM2_AVF", theme_constituency_frequencies, ax=ax)
+                MappingUtils.plot_inset_frequency_map(
+                    constituencies_map, "ADM2_AVF", theme_constituency_frequencies,
+                    inset_region=(36.62, -1.46, 37.12, -1.09), zoom=3, inset_position=(35.60, -2.95), ax=ax)
                 MappingUtils.plot_water_bodies(lakes_map, ax=ax)
                 plt.savefig(f"{output_dir}/maps/constituency_{cc.analysis_file_key}_{map_index}_{code.string_value}.png",
                             dpi=1200, bbox_inches="tight")
