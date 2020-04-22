@@ -17,7 +17,6 @@ DATA_ROOT=$3
 PROJECT_NAME="COVID19"
 DATASETS=(
     "s01e01"
-    "s01e02"
 
     "location"
     "gender"
