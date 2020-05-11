@@ -92,6 +92,17 @@
       ]
     },
     {
+      "CodeID": "code-eaaec5b8",
+      "CodeType": "Normal",
+      "DisplayText": "COVID19-KE-Urban s01e04",
+      "StringValue": "covid19_ke_urban_s01e04",
+      "NumericValue": 9,
+      "VisibleInCoda": true,
+      "MatchValues": [
+        "COVID19-KE-Urban s01e04"
+      ]
+    },
+    {
       "CodeID": "code-NC-42f1d983",
       "CodeType": "Control",
       "ControlCode": "NC",
